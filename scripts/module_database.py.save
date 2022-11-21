@@ -1,0 +1,20 @@
+#!/bin/python3
+import subprocess
+import sys
+import os
+
+dir = os.path.dirname(__file__).split("/")
+#lenght = len(dir)
+#count = 1
+for str in dir:
+	
+dir = dir[:-1]
+
+
+def get(command):
+	command = "sqlite3 " + dir + "origin '" + command +"'"
+	#return subprocess.getoutput([command])
+	return command
+
+print(get("select * from users;"))
+#output([command])
