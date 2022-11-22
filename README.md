@@ -16,12 +16,12 @@ Add Telegram API Token to config file .bot_token ```echo -n "TOKEN" > .bot_token
 ```
 help - show all commands.
 show_users - show all users table. 
-block_user *** - block user if it's possible, check the status table. 
-unblock_user *** - unblock user if it's possible, check the status table. 
+block_user *tg* - block user if it's possible, check the status table. 
+unblock_user *tg* - unblock user if it's possible, check the status table. 
 check_connection - show connections of *all* or by tg id. 
 add_new_user *name*:*ip*:*tg* - add new user in database. 
 remove_user *ip* - remove user from database by ip
-anathem_user *** - eternal curse on user.
+anathem_user *tg* - eternal curse on user.
 mercy_user *tg* - mercy user from eternal curse.
 ```
 ## User commands
