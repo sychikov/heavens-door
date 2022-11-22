@@ -11,7 +11,7 @@ Install database: ```./setup.py```
 Add Telegram API Token to config file .bot_token ```echo -n "TOKEN" > .bot_token```
 ## Using
 
-```sudo ./bot.py```
+```sudo ./new_bot.py```
 ## Admin commands
 ```
 help - show all commands.
