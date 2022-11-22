@@ -2,7 +2,7 @@
 
 #Get bot token
 token = open('.bot_token').read()
-
+#print(token)
 import telebot
 import subprocess
 from telebot import types
