@@ -298,9 +298,9 @@ def my_status(message):
         ips = get_my_ips(user_id)
         for ip in ips:
             status = get_my_status(ip)
-            if str(status) == statuses.FlagBlocked:
+            if str(status) == str(statuses.FlagBlocked):
                 new_message = new_message + ip + " blocked.\n"
-            elif str(status) == statuses.FlagNotBlocked:
+            elif str(status) == str(statuses.FlagNotBlocked):
                 new_message = new_message + ip + " not blocked.\n"
             else:
                 new_message = new_message + ip + " was anathemed. You did something really bad, contact your admininstrator or live with that curse.\n"
