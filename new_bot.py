@@ -363,7 +363,10 @@ def check_users_time():
         #print(tgs)
         if tgs != 1:
             for user_id in tgs:
-                send_msg_updt(user_id[0], "Your connection will be blocked in 10 minutes. You're walking on the really thin ice, man.\n")
+                try:
+                    send_msg_updt(user_id[0], "Your connection will be blocked in 10 minutes. You're walking on the really thin ice, man.\n")
+                except:
+                    print("User with tg: "+user_id[0]+"; still didn't send to bot any messages")
         time.sleep(600)
 
 #Fix problem wirh falling bot after a 24 hours of work.
