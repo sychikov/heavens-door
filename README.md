@@ -15,6 +15,7 @@ Add Telegram API Token to config file .bot_token ```echo -n "TOKEN" > .bot_token
 ## Admin commands
 ```
 help - show all commands.
+broadcast *message* - send message to all users. 
 show_users - show all users table. 
 show_time - show all users time table. 
 block_user *tg* - block user if it's possible, check the status table. 
