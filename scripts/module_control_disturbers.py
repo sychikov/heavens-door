@@ -16,7 +16,7 @@ def check_disturbers():
 
 #Get list of ips users that close to be blocked.
 def check_edgers():
-        ips = module_database.get("select ip from time where hours = " + str(statuses.TimeLimit-1) + " and minutes = 50")
+        ips = module_database.get("select ip from time where hours = " + str(statuses.TimeLimit-1) + " and minutes = " + str(60 - statuses.TimeBeforeAlert))
         ips = ''.join(ips).split("\n")
         ips = [tmp.split(" ")[0] for tmp in ips]
         return ips
