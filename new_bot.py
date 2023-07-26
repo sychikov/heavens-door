@@ -369,6 +369,14 @@ def check_users_time():
                     print("User with tg: "+user_id[0]+"; still didn't send to bot any messages")
         time.sleep(600)
 
+def eternal_circle_of_pain():
+    import time
+    try:
+        bot.polling(none_stop=True)
+    except:
+        print("ConnectionAbortedError")
+        time.sleep(5)
+
 #Fix problem wirh falling bot after a 24 hours of work.
 def send_msg_updt(telegram_id, msg):
     try:
@@ -397,6 +405,7 @@ def send_msg_updt_with_menu(telegram_id, msg, reply_markup=markup):
 #    module_control_disturbers.control()
 #    time.sleep(600)
 from threading import Thread
-th = Thread(target=check_users_time)
-th.start()
-bot.polling(none_stop=True, interval=0)
+main_thread = Thread(target=check_users_time)
+secondary_thread = Thread(target=eternal_circle_of_pain)
+main_thread.start()
+secondary_thread.start()
