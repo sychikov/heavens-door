@@ -40,6 +40,9 @@ from scripts import module_broadcast
 #from scripts import module_chat
 from scripts import statuses
 
+def spawn_bot(token):
+        return telebot.Telebot(token)
+
 #Get all clients
 def get_clients():
         #tg = subprocess.getoutput(["sqlite3 /root/database/origin 'select tg from users'"])
@@ -397,11 +400,13 @@ def check_users_time():
 
 def eternal_circle_of_pain():
     import time
+    global bot
     try:
         bot.polling(none_stop=True)
     except:
         print("ConnectionAbortedError")
         time.sleep(5)
+        bot = spawn_bot(token)
 
 #Fix problem wirh falling bot after a 24 hours of work.
 def send_msg_updt(telegram_id, msg):
