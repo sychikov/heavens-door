@@ -41,7 +41,7 @@ from scripts import module_broadcast
 from scripts import statuses
 
 def spawn_bot(token):
-        return telebot.Telebot(token)
+        return telebot.TeleBot(token)
 
 #Get all clients
 def get_clients():
@@ -251,12 +251,16 @@ def add_new_user(message):
     if  check_rights(user_id) == 0:
         mess = message.text.split(" ")
 
-        broadcast_message = mess[1]
+        broadcast_message = ""
+        for i in range(1,len(mess)):
+            broadcast_message = broadcast_message + " " + mess[i]
+
         users_list = module_broadcast.get_clients()
         #print(users_list)
         for user_id in users_list:
             try:
                 send_msg_updt_with_menu(user_id, broadcast_message)
+                #print(broadcast_message)
             except:
                 print("Message to " + user_id + " wasn't delivered.")
         #if result.split("\n")[0] == "0":
