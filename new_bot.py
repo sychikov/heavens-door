@@ -107,7 +107,7 @@ def start(message):
         send_msg_updt(user_id, "Fuck off man, I have a job to do")
 
     else:
-        send_msg_updt(user_id, "/help - show all commands. \n/broadcast *message* - send message to all users in database. \n/show_users - show all users table. \n/show_time - show all users time table. \n/block_user *** - block user if it's possible, check the status table. \n/unblock_user *** - unblock user if it's possible, check the status table. \n/check_connection - show connections of *all* or by tg id. \n/add_new_user *name*:*ip*:*tg* - add new user in database. \n/remove_user *ip* - remove user from database by ip. \n/anathem_user *** - eternal curse on user. \n/mercy_user *tg* - mercy user from eternal curse.")
+        send_msg_updt(user_id, "/help - show all commands. \n/broadcast *message* - send message to all users in database. \n/show_users - show all users table. \n/show_time - show all users time table. \n/message *tg* *message* - send message to specified by tg user. \n/block_user *** - block user if it's possible, check the status table. \n/unblock_user *** - unblock user if it's possible, check the status table. \n/check_connection - show connections of *all* or by tg id. \n/add_new_user *name*:*ip*:*tg* - add new user in database. \n/remove_user *ip* - remove user from database by ip. \n/anathem_user *** - eternal curse on user. \n/mercy_user *tg* - mercy user from eternal curse.")
 
 @bot.message_handler(commands=['show_users'])
 def show_users(message):
@@ -273,6 +273,32 @@ def add_new_user(message):
     else:
         send_msg_updt(user_id, "Fuck off man, I have a job to do")
 
+@bot.message_handler(commands=['message'])
+def add_new_user(message):
+    user_id = message.from_user.id
+    if  check_rights(user_id) == 0:
+        mess = message.text.split(" ")
+        print(mess)
+        user_id = mess[1]
+        new_message = ""
+        for i in range(2,len(mess)):
+            new_message = new_message + " " + mess[i]
+
+        try:
+            send_msg_updt_with_menu(user_id, new_message)
+            #print(new_message)
+        except:
+            print("Message to " + user_id + " wasn't delivered.")
+        #if result.split("\n")[0] == "0":
+        #    send_msg_updt(user_id, "User blocked successfully")
+        #else:
+        #    send_msg_updt(user_id, "User cannot be blocked")
+
+    elif check_rights(user_id) == 1:
+        send_msg_updt_with_menu(user_id, "You have no rights for it", reply_markup=markup)
+    else:
+        send_msg_updt(user_id, "Fuck off man, I have a job to do")
+
 @bot.message_handler(commands=['add_new_user'])
 def add_new_user(message):
     user_id = message.from_user.id
@@ -328,7 +354,7 @@ def help(message):
         #module_chat.check(user_id, message.chat.id)
 
     elif check_rights(user_id) == 0:
-        send_msg_updt(user_id, "/help - show all commands. \n/broadcast *message* - send message to all users in database. \n/show_users - show all users table. \n/show_time - show all users time table. \n/block_user *** - block user if it's possible, check the status table. \n/unblock_user *** - unblock user if it's possible, check the status table. \n/check_connection - show connections of *all* or by tg id. \n/add_new_user *name*:*ip*:*tg* - add new user in database. \n/remove_user *ip* - remove user from database by ip. \n/anathem_user *** - eternal curse on user. \n/mercy_user *tg* - mercy user from eternal curse.")
+        send_msg_updt(user_id, "/help - show all commands. \n/broadcast *message* - send message to all users in database. \n/show_users - show all users table. \n/show_time - show all users time table. \n/message *tg* *message* - send message to specified by tg user. \n/block_user *** - block user if it's possible, check the status table. \n/unblock_user *** - unblock user if it's possible, check the status table. \n/check_connection - show connections of *all* or by tg id. \n/add_new_user *name*:*ip*:*tg* - add new user in database. \n/remove_user *ip* - remove user from database by ip. \n/anathem_user *** - eternal curse on user. \n/mercy_user *tg* - mercy user from eternal curse.")
 
     else:
         send_msg_updt(user_id, "Fuck off man, I have a job to do")
