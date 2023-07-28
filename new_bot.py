@@ -435,7 +435,7 @@ def eternal_circle_of_pain():
         bot.polling(none_stop=True)
     except:
         print("ConnectionAbortedError")
-        time.sleep(5)
+        time.sleep(2)
         bot = spawn_bot(token)
 
 #Fix problem wirh falling bot after a 24 hours of work.
@@ -444,7 +444,7 @@ def send_msg_updt(telegram_id, msg):
         bot.send_message(telegram_id, msg)
     except (ConnectionAbortedError, ConnectionResetError, ConnectionRefusedError, ConnectionError):
         print("ConnectionError - Sending again after 5 seconds!!!")
-        time.sleep(5)
+        time.sleep(2)
         send_msg_updt(telegram_id, msg)
 
 #Fix problem wirh falling bot after a 24 hours of work, but for regular clients.
@@ -453,7 +453,7 @@ def send_msg_updt_with_menu(telegram_id, msg, reply_markup=markup):
         bot.send_message(telegram_id, msg, reply_markup=markup)
     except (ConnectionAbortedError, ConnectionResetError, ConnectionRefusedError, ConnectionError):
         print("ConnectionError - Sending again after 5 seconds!!!")
-        time.sleep(5)
+        time.sleep(2)
         send_msg_updt_with_menu(telegram_id, msg, reply_markup=markup)
 
 #Main function
