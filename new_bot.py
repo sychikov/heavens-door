@@ -433,8 +433,8 @@ def eternal_circle_of_pain():
     global bot
     try:
         bot.polling(none_stop=True)
-    except:
-        print("ConnectionAbortedError")
+    except (ConnectionAbortedError, ConnectionResetError, ConnectionRefusedError, ConnectionError):
+        #print("ConnectionAbortedError")
         time.sleep(2)
         bot = spawn_bot(token)
 
@@ -443,7 +443,7 @@ def send_msg_updt(telegram_id, msg):
     try:
         bot.send_message(telegram_id, msg)
     except (ConnectionAbortedError, ConnectionResetError, ConnectionRefusedError, ConnectionError):
-        print("ConnectionError - Sending again after 5 seconds!!!")
+        #print("ConnectionError - Sending again after 5 seconds!!!")
         time.sleep(2)
         send_msg_updt(telegram_id, msg)
 
@@ -452,7 +452,7 @@ def send_msg_updt_with_menu(telegram_id, msg, reply_markup=markup):
     try:
         bot.send_message(telegram_id, msg, reply_markup=markup)
     except (ConnectionAbortedError, ConnectionResetError, ConnectionRefusedError, ConnectionError):
-        print("ConnectionError - Sending again after 5 seconds!!!")
+        #print("ConnectionError - Sending again after 5 seconds!!!")
         time.sleep(2)
         send_msg_updt_with_menu(telegram_id, msg, reply_markup=markup)
 
