@@ -8,6 +8,7 @@ def remove_from_database(ip):
         try:
                 result = module_database.change("delete from users where ip = \"" + ip + "\"")
                 result = module_database.change("delete from time where ip = \"" + ip + "\"")
+                result = module_database.change("delete from configs where ip = \"" + ip + "\"")
                 return 0
         except:
                 return 1

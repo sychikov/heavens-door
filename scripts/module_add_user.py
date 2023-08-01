@@ -1,9 +1,9 @@
 #!/bin/python3
 from scripts import module_database
 from scripts import statuses
-user = [""]*3
+user = [""]*4
 
-#Input should look like: "/add_user name:ip:tg"
+#Input should look like: "/add_user name:ip:tg:config_name"
 #Pase input for put it in database
 def parse(new_user):
         global user
@@ -23,6 +23,7 @@ def add_to_database():
                 number = int(''.join(module_database.get("select max(id) from users").split("\n")))+1
         result = module_database.change("insert into users values (" + str(number) + ", \"" + user[0] + "\", \"" + user[1] + "\", " + str(statuses.FlagNotBlocked) +",\"" + user[2] + "\")")
         result = module_database.change("insert into time values (" + str(number) + ", \"" + user[1] + "\", 0, 0)")
+        result = module_database.change("insert into configs values (\"" + user[1] + "\", \"" + user[3] + "\")")
         #print("insert into users values (" + str(number) + ", \"" + user[0] + "\", \"" + user[1] + "\", " + " 0, \"" + user[2] + "\")")
         #print(result)
 

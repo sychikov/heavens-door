@@ -18,7 +18,8 @@ markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
 butt_time = types.KeyboardButton('/time')
 butt_status = types.KeyboardButton('/status')
 butt_unblock = types.KeyboardButton('/unblock')
-markup.row(butt_time, butt_status, butt_unblock)
+butt_configs = types.KeyboardButton('/configs')
+markup.row(butt_time, butt_status, butt_unblock, butt_configs)
 
 #Import modules from scripts directory
 import sys
@@ -37,8 +38,10 @@ from scripts import module_remove_user
 from scripts import module_control_disturbers
 from scripts import module_control_time
 from scripts import module_broadcast
+from scripts import module_wireguard
 #from scripts import module_chat
 from scripts import statuses
+
 
 def spawn_bot(token):
         return telebot.TeleBot(token)
@@ -107,7 +110,7 @@ def start(message):
         send_msg_updt(user_id, "Fuck off man, I have a job to do")
 
     else:
-        send_msg_updt(user_id, "/help - show all commands. \n/broadcast *message* - send message to all users in database. \n/show_users - show all users table. \n/show_time - show all users time table. \n/message *tg* *message* - send message to specified by tg user. \n/block_user *** - block user if it's possible, check the status table. \n/unblock_user *** - unblock user if it's possible, check the status table. \n/check_connection - show connections of *all* or by tg id. \n/add_new_user *name*:*ip*:*tg* - add new user in database. \n/remove_user *ip* - remove user from database by ip. \n/anathem_user *** - eternal curse on user. \n/mercy_user *tg* - mercy user from eternal curse.")
+        send_msg_updt(user_id, "/help - show all commands. \n/broadcast *message* - send message to all users in database. \n/show_users - show all users table. \n/show_time - show all users time table. \n/show_configs - show all configs table. \n/message *tg* *message* - send message to specified by tg user. \n/block_user *** - block user if it's possible, check the status table. \n/unblock_user *** - unblock user if it's possible, check the status table. \n/check_connection - show connections of *all* or by tg id. \n/add_new_user *name*:*ip*:*tg* - add new user in database. \n/remove_user *ip* - remove user from database by ip. \n/anathem_user *** - eternal curse on user. \n/mercy_user *tg* - mercy user from eternal curse.")
 
 @bot.message_handler(commands=['show_users'])
 def show_users(message):
@@ -244,6 +247,44 @@ def get_all_time(message):
     else:
         send_msg_updt(user_id, "Fuck off man, I have a job to do")
 
+@bot.message_handler(commands=['show_configs'])
+def get_all_time(message):
+    user_id = message.from_user.id
+    if  check_rights(user_id) == 0:
+        #new_message = subprocess.getoutput(["sqlite3 /root/database/origin 'select * from users'"])
+        new_message = module_database.get("select * from configs")
+        send_msg_updt(user_id, new_message)
+    elif check_rights(user_id) == 1:
+        send_msg_updt_with_menu(user_id, "You have no rights for it", reply_markup=markup)
+    else:
+        send_msg_updt(user_id, "Fuck off man, I have a job to do")
+
+#@bot.message_handler(commands=['show_configs1'])
+#def get_all_time(message):
+#    user_id = message.from_user.id
+#    if  check_rights(user_id) == 0:
+#        ips = get_my_ips(user_id)
+#        names = module_wireguard.get_names(ips)
+#        for name in names:
+#            tmp = module_wireguard.get_config(name)
+#            send_msg_updt_with_menu(user_id, tmp)
+#    elif check_rights(user_id) == 1:
+#        send_msg_updt_with_menu(user_id, "You have no rights for it", reply_markup=markup)
+#    else:
+#        send_msg_updt(user_id, "Fuck off man, I have a job to do")
+
+@bot.message_handler(commands=['configs'])
+def my_status(message):
+    user_id = message.from_user.id
+    if  check_rights(user_id) == 1:
+        ips = get_my_ips(user_id)
+        names = module_wireguard.get_names(ips)
+        for name in names:
+            tmp = module_wireguard.get_config(name)
+            send_msg_updt_with_menu(user_id, tmp)
+    else:
+        send_msg_updt(user_id, "Fuck off man, I have a job to do")
+
 
 @bot.message_handler(commands=['broadcast'])
 def add_new_user(message):
@@ -349,12 +390,13 @@ def help(message):
         butt_time = types.KeyboardButton('/time')
         butt_status = types.KeyboardButton('/status')
         butt_unblock = types.KeyboardButton('/unlock')
-        markup.row(butt_time, butt_status, butt_unblock)
+        butt_configs = types.KeyboardButton('/configs')
+        markup.row(butt_time, butt_status, butt_unblock, butt_configs)
         send_msg_updt_with_menu(user_id, "Hey buddy do you need something?\nUse command /help if you forgot commands", reply_markup=markup)
         #module_chat.check(user_id, message.chat.id)
 
     elif check_rights(user_id) == 0:
-        send_msg_updt(user_id, "/help - show all commands. \n/broadcast *message* - send message to all users in database. \n/show_users - show all users table. \n/show_time - show all users time table. \n/message *tg* *message* - send message to specified by tg user. \n/block_user *** - block user if it's possible, check the status table. \n/unblock_user *** - unblock user if it's possible, check the status table. \n/check_connection - show connections of *all* or by tg id. \n/add_new_user *name*:*ip*:*tg* - add new user in database. \n/remove_user *ip* - remove user from database by ip. \n/anathem_user *** - eternal curse on user. \n/mercy_user *tg* - mercy user from eternal curse.")
+        send_msg_updt(user_id, "/help - show all commands. \n/broadcast *message* - send message to all users in database. \n/show_users - show all users table. \n/show_time - show all users time table. \n/show_configs - show all configs table. \n/message *tg* *message* - send message to specified by tg user. \n/block_user *** - block user if it's possible, check the status table. \n/unblock_user *** - unblock user if it's possible, check the status table. \n/check_connection - show connections of *all* or by tg id. \n/add_new_user *name*:*ip*:*tg* - add new user in database. \n/remove_user *ip* - remove user from database by ip. \n/anathem_user *** - eternal curse on user. \n/mercy_user *tg* - mercy user from eternal curse.")
 
     else:
         send_msg_updt(user_id, "Fuck off man, I have a job to do")
