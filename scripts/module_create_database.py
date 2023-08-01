@@ -17,6 +17,12 @@ def create_table_time(path):
         print(command)
         subprocess.check_output(command, shell=True)
 
+#Create third table.
+def create_table_configs(path):
+        command = "sqlite3 " + path + " 'create table configs (ip string, config_name string)'"
+        print(command)
+        subprocess.check_output(command, shell=True)
+
 #Create third table
 #def create_table_time(path):
         #command = "sqlite3 " + path + " 'create table chat (tg string, chatid string)'"
@@ -38,5 +44,6 @@ def create():
 #       print(path)
         create_table_users(path)
         create_table_time(path)
+        create_table_config(path)
 #add_zero_user(path)
 #dir = '/'.join(os.path.abspath(os.curdir).split("/")[:-1])+"/database/"

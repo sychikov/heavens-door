@@ -1,9 +1,9 @@
 #!/bin/python3
 from scripts import module_database
 from database import statuses
-admin = [""]*3
+admin = [""]*4
 
-#Input should look like: "/add_admin name:ip:tg"
+#Input should look like: "/add_admin name:ip:tg:config_name"
 #Pase input for put it in database
 def parse(new_admin):
         global admin
@@ -25,9 +25,8 @@ def add_to_database():
         #print(command)
         #result = module_database.change(command)
         result = module_database.change("insert into users values (0, \"" + admin[0] + "\", \"" + admin[1] + "\", " + str(statuses.FlagNotBlocked) + ", \"" + admin[2] + "\")")
-        command = "insert into time values (0, \"" + admin[1] + "\", 0, 0)"
-        #print(command)
-        result = module_database.change(command)
+        result = module_database.change("insert into time values (0, \"" + admin[1] + "\", 0, 0)")
+        result = module_database.change("insert into configs values (\"" + admin[1] + "\", \"" + admin[3] + "\")")
         #result = module_database.change("update time set ip = \"" + admin[1] + "\" where id = 0")
         #print("insert into admins values (" + str(number) + ", \"" + admin[0] + "\", \"" + admin[1] + "\", " + " 0, \"" + admin[2] + "\")")
         #print(result)
