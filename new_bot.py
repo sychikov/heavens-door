@@ -1,16 +1,15 @@
 #!/bin/python3
 
-#Get bot token
 import os
+#Prepare path to bot token
 main_path = os.path.dirname(os.path.abspath(__file__))
-#print(main_path)
+#Get bot token from file
 token = open(main_path+'/.bot_token').read()
-#print(token)
 import telebot
 import subprocess
 from telebot import types
 
-#Create bot
+#Create bot with token
 bot = telebot.TeleBot(token)
 
 #Prepare user keyboard
@@ -19,14 +18,12 @@ butt_time = types.KeyboardButton('/time')
 butt_status = types.KeyboardButton('/status')
 butt_unblock = types.KeyboardButton('/unblock')
 butt_configs = types.KeyboardButton('/configs')
+
+#Create user keyboard
 markup.row(butt_time, butt_status, butt_unblock, butt_configs)
 
-#Import modules from scripts directory
 import sys
-#base_dir = os.path.dirname(__file__) or '.'
-#dir_scripts = os.path.join(base_dir, 'scripts')
-#sys.path.append(dir_scripts)
-
+#Import modules from scripts directory
 from scripts import module_block_user
 from scripts import module_unblock_user
 from scripts import module_check_connection
@@ -42,11 +39,11 @@ from scripts import module_wireguard
 #from scripts import module_chat
 from scripts import statuses
 
-
+#I use it for respawn bot if it'll fall'
 def spawn_bot(token):
         return telebot.TeleBot(token)
 
-#Get all clients
+#Get all clients from database
 def get_clients():
         #tg = subprocess.getoutput(["sqlite3 /root/database/origin 'select tg from users'"])
         tg = module_database.get("select tg from users")
@@ -85,7 +82,7 @@ def unblock_user(tg):
         else:
                 return "User cannot be unblocked"
 
-#Chech if user is admin
+#Chech if user is admin, user or noone
 def check_rights(user_id):
         #master_code = subprocess.getoutput(["sqlite3 /root/database/origin 'select tg from users where id = 0'"])
         master_code = module_database.get("select tg from users where id = 0")
@@ -99,6 +96,7 @@ def check_rights(user_id):
                     return 1
             return 2
 
+#Start function for bot.
 @bot.message_handler(commands=['start'])
 def start(message):
     user_id = message.from_user.id
@@ -112,6 +110,7 @@ def start(message):
     else:
         send_msg_updt(user_id, "/help - show all commands. \n/broadcast *message* - send message to all users in database. \n/show_users - show all users table. \n/show_time - show all users time table. \n/show_configs - show all configs table. \n/message *tg* *message* - send message to specified by tg user. \n/block_user *** - block user if it's possible, check the status table. \n/unblock_user *** - unblock user if it's possible, check the status table. \n/check_connection - show connections of *all* or by tg id. \n/add_new_user *name*:*ip*:*tg* - add new user in database. \n/remove_user *ip* - remove user from database by ip. \n/anathem_user *** - eternal curse on user. \n/mercy_user *tg* - mercy user from eternal curse.")
 
+#Admin function for get all table with users.
 @bot.message_handler(commands=['show_users'])
 def show_users(message):
     user_id = message.from_user.id
@@ -136,6 +135,7 @@ def show_users(message):
 #    else:
 #        send_msg_updt(user_id, "Fuck off man, I have a job to do")
 
+#Admin function for block user by his tg id.
 @bot.message_handler(commands=['block_user'])
 def block_user(message):
     user_id = message.from_user.id
@@ -157,6 +157,7 @@ def block_user(message):
     else:
         send_msg_updt(user_id, "Fuck off man, I have a job to do")
 
+#Admin fucntion for unblock user by his tg id.
 @bot.message_handler(commands=['unblock_user'])
 def unblock_user(message):
     user_id = message.from_user.id
@@ -178,6 +179,7 @@ def unblock_user(message):
     else:
         send_msg_updt(user_id, "Fuck off man, I have a job to do")
 
+#Admin fuction for check current connections. It pings all ips and see if anyone respond
 @bot.message_handler(commands=['check_connection'])
 def check_connection(message):
     user_id = message.from_user.id
@@ -193,6 +195,7 @@ def check_connection(message):
     else:
         send_msg_updt(user_id, "Fuck off man, I have a job to do")
 
+#Admin function for superblock user if he did something really bad. Only admin can cancel it.
 @bot.message_handler(commands=['anathem_user'])
 def anathem_user(message):
     user_id = message.from_user.id
@@ -214,6 +217,7 @@ def anathem_user(message):
     else:
         send_msg_updt(user_id, "Fuck off man, I have a job to do")
 
+#Admin function for unblock superblocked user. Only way to cancel it.
 @bot.message_handler(commands=['mercy_user'])
 def mercy_user(message):
     user_id = message.from_user.id
@@ -235,6 +239,7 @@ def mercy_user(message):
     else:
         send_msg_updt(user_id, "Fuck off man, I have a job to do")
 
+#Admin function for get all table with time and ips of all users.
 @bot.message_handler(commands=['show_time'])
 def get_all_time(message):
     user_id = message.from_user.id
@@ -247,6 +252,7 @@ def get_all_time(message):
     else:
         send_msg_updt(user_id, "Fuck off man, I have a job to do")
 
+#Admin function for get all table with ips and configs.
 @bot.message_handler(commands=['show_configs'])
 def get_all_time(message):
     user_id = message.from_user.id
@@ -273,6 +279,7 @@ def get_all_time(message):
 #    else:
 #        send_msg_updt(user_id, "Fuck off man, I have a job to do")
 
+#User function for get his configs by tg id. Collect all his ips and return all files that associated with him.
 @bot.message_handler(commands=['configs'])
 def my_status(message):
     user_id = message.from_user.id
@@ -285,7 +292,7 @@ def my_status(message):
     else:
         send_msg_updt(user_id, "Fuck off man, I have a job to do")
 
-
+#Admin fucntion for send message to all users who ever send "start" command to bot.
 @bot.message_handler(commands=['broadcast'])
 def add_new_user(message):
     user_id = message.from_user.id
@@ -314,6 +321,7 @@ def add_new_user(message):
     else:
         send_msg_updt(user_id, "Fuck off man, I have a job to do")
 
+#Admins fucntion for send message to user by using his tg id. You can't send message to user that didn't asked "start" to bot.
 @bot.message_handler(commands=['message'])
 def add_new_user(message):
     user_id = message.from_user.id
@@ -340,6 +348,7 @@ def add_new_user(message):
     else:
         send_msg_updt(user_id, "Fuck off man, I have a job to do")
 
+#Admin function for create new user that will be added to users, time and config tables. It's more about specific config than bran new client.
 @bot.message_handler(commands=['add_new_user'])
 def add_new_user(message):
     user_id = message.from_user.id
@@ -361,6 +370,7 @@ def add_new_user(message):
     else:
         send_msg_updt(user_id, "Fuck off man, I have a job to do")
 
+#Admin function for remove user from users, time and config tables by his ip. It's more about specific config than bran new client.
 @bot.message_handler(commands=['remove_user'])
 def remove_user(message):
     user_id = message.from_user.id
@@ -382,6 +392,7 @@ def remove_user(message):
     else:
         send_msg_updt(user_id, "Fuck off man, I have a job to do")
 
+#Universal help command for users and for admin. More for admin, it's a lot of possible commands and no menu for him.
 @bot.message_handler(commands=['help'])
 def help(message):
     user_id = message.from_user.id
@@ -401,6 +412,7 @@ def help(message):
     else:
         send_msg_updt(user_id, "Fuck off man, I have a job to do")
 
+#User command for get current time of activity of all his ip.
 @bot.message_handler(commands=['time'])
 def time(message):
     user_id = message.from_user.id
@@ -413,6 +425,7 @@ def time(message):
     else:
         send_msg_updt(user_id, "Fuck off man, I have a job to do")
 
+#User command for get current status of all his ip.
 @bot.message_handler(commands=['status'])
 def my_status(message):
     user_id = message.from_user.id
@@ -432,6 +445,7 @@ def my_status(message):
     else:
         send_msg_updt(user_id, "Fuck off man, I have a job to do")
 
+#user command for unblock himself if he was blocked by bot or admin. It won't work on superblocked users.
 @bot.message_handler(commands=['unlock'])
 def unblock_me(message):
     user_id = message.from_user.id
@@ -455,6 +469,7 @@ def get_text_messages(message):
     else:
         send_msg_updt(user_id, "Fuck off man, I have a job to do")
 
+#Thread for check users time, check if someone of them online for too long and block them if they deserved it.
 def check_users_time():
     import time
     while True:
@@ -470,6 +485,7 @@ def check_users_time():
                     print("User with tg: "+user_id[0]+"; still didn't send to bot any messages")
         time.sleep(600)
 
+#Thread for respawn bot if that mf will fall.
 def eternal_circle_of_pain():
     import time
     global bot
@@ -498,7 +514,7 @@ def send_msg_updt_with_menu(telegram_id, msg, reply_markup=markup):
         time.sleep(2)
         send_msg_updt_with_menu(telegram_id, msg, reply_markup=markup)
 
-#Fix problem wirh falling bot after a 24 hours of work, but for regular clients.
+#Fix problem wirh falling bot after a 24 hours of work, but with markdown
 def send_msg_updt_with_menu_and_markdown(telegram_id, msg):
     try:
         bot.send_message(telegram_id, msg, reply_markup=markup, parse_mode='MarkdownV2')
