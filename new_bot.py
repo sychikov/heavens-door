@@ -283,7 +283,7 @@ def get_all_time(message):
 @bot.message_handler(commands=['configs'])
 def my_status(message):
     user_id = message.from_user.id
-    if  check_rights(user_id) == 1:
+    if  (check_rights(user_id) == 1) or (check_rights(user_id) == 0):
         ips = get_my_ips(user_id)
         names = module_wireguard.get_names(ips)
         for name in names:
