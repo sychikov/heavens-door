@@ -10,7 +10,7 @@ import subprocess
 from telebot import types
 
 #Create bot with token
-bot = telebot.TeleBot(token)
+bot = telebot.TeleBot(token, threaded=False)
 
 #Prepare user keyboard
 markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -41,7 +41,7 @@ from scripts import statuses
 
 #I use it for respawn bot if it'll fall'
 def spawn_bot(token):
-        return telebot.TeleBot(token)
+        return telebot.TeleBot(token, threaded=False)
 
 #Get all clients from database
 def get_clients():
