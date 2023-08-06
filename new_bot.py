@@ -509,6 +509,7 @@ def eternal_circle_of_pain():
     except (ConnectionAbortedError, ConnectionResetError, ConnectionRefusedError, ConnectionError):
         #print("ConnectionAbortedError")
         time.sleep(2)
+        bot.stop_polling()
         bot = spawn_bot(token)
 
 #Fix problem wirh falling bot after a 24 hours of work.
