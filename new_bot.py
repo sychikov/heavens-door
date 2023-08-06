@@ -415,10 +415,10 @@ def help(message):
         markup = types.ReplyKeyboardMarkup()
         butt_time = types.KeyboardButton('/time')
         butt_status = types.KeyboardButton('/status')
-        butt_unblock = types.KeyboardButton('/unlock')
+        butt_unblock = types.KeyboardButton('/unblock')
         butt_configs = types.KeyboardButton('/configs')
         markup.row(butt_time, butt_status, butt_unblock, butt_configs)
-        send_msg_updt_with_menu(user_id, "Hey buddy do you need something?\nUse command /help if you forgot commands", reply_markup=markup)
+        send_msg_updt_with_menu(user_id, "/help - show all commands. \n/unblock - unblock user if it's possible. \n/time - show your active time. \n/status - show your status. \n/configs - show your configs.", reply_markup=markup)
         #module_chat.check(user_id, message.chat.id)
 
     elif check_rights(user_id) == 0:
@@ -461,7 +461,7 @@ def my_status(message):
         send_msg_updt(user_id, "Fuck off man, I have a job to do")
 
 #user command for unblock himself if he was blocked by bot or admin. It won't work on superblocked users.
-@bot.message_handler(commands=['unlock'])
+@bot.message_handler(commands=['unblock'])
 def unblock_me(message):
     user_id = message.from_user.id
     if  check_rights(user_id) == 1:
