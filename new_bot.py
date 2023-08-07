@@ -108,7 +108,7 @@ def start(message):
         send_msg_updt(user_id, "Fuck off man, I have a job to do")
 
     else:
-        send_msg_updt(user_id, "/help - show all commands. \n/broadcast *message* - send message to all users in database. \n/show_users - show all users table. \n/show_time - show all users time table. \n/show_configs - show all configs table. \n/message *tg* *message* - send message to specified by tg user. \n/get_configs *tg* - get all configs associated with tg id. \n/block_user *tg* - block user if it's possible, check the status table. \n/unblock_user *tg* - unblock user if it's possible, check the status table. \n/check_connection - show connections of *all* or by tg id. \n/add_new_user *name*:*ip*:*tg*:*config_name* - add new user in database. \n/remove_user *ip* - remove user from database by ip. \n/anathem_user *tg* - eternal curse on user. \n/mercy_user *tg* - mercy user from eternal curse.")
+        send_msg_updt(user_id, "/help - show all commands. \n/broadcast *message* - send message to all users in database. \n/show_users - show all users table. \n/show_time - show all users time table. \n/show_configs - show all configs table. \n/message *tg* *message* - send message to specified by tg user. \n/get_configs *tg* - get all configs associated with tg id. \n/block_user *tg* - block user if it's possible, check the status table. \n/unblock_user *tg* - unblock user if it's possible, check the status table. \n/check_connection - show connections of *all* or by tg id. \n/add_new_user *name*:*ip*:*tg*:*config_name* - add new user in database. \n/remove_user *ip* - remove user from database by ip. \n/anathem_user *tg* - eternal curse on user. \n/mercy_user *tg* - mercy user from eternal curse. \n/create_new_config *config_name* - create brand new config for Wireguard and activate it.")
 
 #Admin function for get all table with users.
 @bot.message_handler(commands=['show_users'])
@@ -407,6 +407,19 @@ def remove_user(message):
     else:
         send_msg_updt(user_id, "Fuck off man, I have a job to do")
 
+@bot.message_handler(commands=['create_new_config'])
+def remove_user(message):
+    user_id = message.from_user.id
+    if  check_rights(user_id) == 0:
+        mess = message.text.split(" ")
+        tmp = module_wireguard.create_new_config(mess[1])
+        send_msg_updt(user_id, tmp)
+
+    elif check_rights(user_id) == 1:
+        send_msg_updt_with_menu(user_id, "You have no rights for it", reply_markup=markup)
+    else:
+        send_msg_updt(user_id, "Fuck off man, I have a job to do")
+
 #Universal help command for users and for admin. More for admin, it's a lot of possible commands and no menu for him.
 @bot.message_handler(commands=['help'])
 def help(message):
@@ -422,7 +435,7 @@ def help(message):
         #module_chat.check(user_id, message.chat.id)
 
     elif check_rights(user_id) == 0:
-        send_msg_updt(user_id, "/help - show all commands. \n/broadcast *message* - send message to all users in database. \n/show_users - show all users table. \n/show_time - show all users time table. \n/show_configs - show all configs table. \n/message *tg* *message* - send message to specified by tg user. \n/get_configs *tg* - get all configs associated with tg id. \n/block_user *tg* - block user if it's possible, check the status table. \n/unblock_user *tg* - unblock user if it's possible, check the status table. \n/check_connection - show connections of *all* or by tg id. \n/add_new_user *name*:*ip*:*tg*:*config_name* - add new user in database. \n/remove_user *ip* - remove user from database by ip. \n/anathem_user *tg* - eternal curse on user. \n/mercy_user *tg* - mercy user from eternal curse.")
+        send_msg_updt(user_id, "/help - show all commands. \n/broadcast *message* - send message to all users in database. \n/show_users - show all users table. \n/show_time - show all users time table. \n/show_configs - show all configs table. \n/message *tg* *message* - send message to specified by tg user. \n/get_configs *tg* - get all configs associated with tg id. \n/block_user *tg* - block user if it's possible, check the status table. \n/unblock_user *tg* - unblock user if it's possible, check the status table. \n/check_connection - show connections of *all* or by tg id. \n/add_new_user *name*:*ip*:*tg*:*config_name* - add new user in database. \n/remove_user *ip* - remove user from database by ip. \n/anathem_user *tg* - eternal curse on user. \n/mercy_user *tg* - mercy user from eternal curse. \n/create_new_config *config_name* - create brand new config for Wireguard and activate it.")
 
     else:
         send_msg_updt(user_id, "Fuck off man, I have a job to do")
