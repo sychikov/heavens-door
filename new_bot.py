@@ -487,6 +487,7 @@ def get_text_messages(message):
 #Thread for check users time, check if someone of them online for too long and block them if they deserved it.
 def check_users_time():
     import time
+    timerTillMessage = 0
     while True:
         module_control_time.check_time()
         module_control_disturbers.control()
@@ -499,6 +500,14 @@ def check_users_time():
                 except:
                     print("User with tg: "+user_id[0]+"; still didn't send to bot any messages")
         time.sleep(600)
+        #One more try to prevent bot from falling
+        timerTillMessage = timerTillMessage + 10
+        if timerTillMessage > 290:
+            try:
+                send_msg_updt("11111111", "Some message")
+            except:
+                print("Message was sent")
+            timerTillMessage = 0
 
 #Thread for respawn bot if that mf will fall.
 def eternal_circle_of_pain():
