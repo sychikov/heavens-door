@@ -24,7 +24,7 @@ get_configs *tg* - get all configs associated with tg id.
 block_user *tg* - block user if it's possible, check the status table. 
 unblock_user *tg* - unblock user if it's possible, check the status table. 
 check_connection - show connections of all or by tg id. 
-add_new_user *name*:*ip*:*tg* - add new user in database. 
+add_new_user *name*:*ip*:*tg*:*config_name* - add new user in database. 
 remove_user *ip* - remove user from database by ip
 anathem_user *tg* - eternal curse on user.
 mercy_user *tg* - mercy user from eternal curse.
