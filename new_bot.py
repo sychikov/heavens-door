@@ -36,8 +36,8 @@ from scripts import module_control_disturbers
 from scripts import module_control_time
 from scripts import module_broadcast
 from scripts import module_wireguard
-#from scripts import module_chat
 from scripts import statuses
+
 
 #I use it for respawn bot if it'll fall'
 def spawn_bot(token):
@@ -407,6 +407,7 @@ def remove_user(message):
     else:
         send_msg_updt(user_id, "Fuck off man, I have a job to do")
 
+#Admin function for create new configs and activate it by one command.
 @bot.message_handler(commands=['create_new_config'])
 def remove_user(message):
     user_id = message.from_user.id
@@ -444,7 +445,7 @@ def help(message):
 @bot.message_handler(commands=['time'])
 def time(message):
     user_id = message.from_user.id
-    if  check_rights(user_id) == 1:
+    if  (check_rights(user_id) == 1) or (check_rights(user_id) == 0):
         #module_chat.check(user_id, message.chat.id)
         ips = get_my_ips(user_id)
         for ip in ips:
@@ -457,7 +458,7 @@ def time(message):
 @bot.message_handler(commands=['status'])
 def my_status(message):
     user_id = message.from_user.id
-    if  check_rights(user_id) == 1:
+    if  (check_rights(user_id) == 1) or (check_rights(user_id) == 0):
         new_message = ""
         ips = get_my_ips(user_id)
         for ip in ips:
@@ -477,7 +478,7 @@ def my_status(message):
 @bot.message_handler(commands=['unblock'])
 def unblock_me(message):
     user_id = message.from_user.id
-    if  check_rights(user_id) == 1:
+    if  (check_rights(user_id) == 1) or (check_rights(user_id) == 0):
         result = module_unblock_user.by_tg(user_id)
         #module_chat.check(user_id, message.chat.id)
         if result == 0:
