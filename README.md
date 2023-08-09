@@ -4,9 +4,11 @@ telegram bot to control your VPN connection. Can be used for Wireguard VPN to co
 Tired of people who use your VPN for too long? That bot will warn them first and block if they will go too far and unblock when they will earn your forgiveness. You can create new configs without connect to server by yourself.
 ## Intalling
 
-Install the sqlite: ```sudo apt install sqlite3```
+Install sqlite: ```sudo apt install sqlite3```
 
-Install database: ```./setup.py```
+Install the database: ```./setup.py```
+
+Install Wireguard: ```sudo apt install wireguard```
 
 Add Telegram API Token to config file .bot_token ```echo -n "TOKEN" > .bot_token```
 ## Using
