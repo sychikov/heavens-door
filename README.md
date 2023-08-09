@@ -14,7 +14,7 @@ Add Telegram API Token to config file .bot_token ```echo -n "TOKEN" > .bot_token
 ```sudo ./new_bot.py```
 ## Admin commands
 ```
-/help - show all commands. 
+help - show all commands. 
 
 Get info: 
 
