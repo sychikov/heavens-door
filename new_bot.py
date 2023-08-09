@@ -108,7 +108,7 @@ def start(message):
         send_msg_updt(user_id, "Fuck off man, I have a job to do")
 
     else:
-        send_msg_updt(user_id, "/help - show all commands. \n\nGet info: \n\n/show_users - show all users table. \n/show_time - show all users time table. \n/show_configs - show all configs table. \n/get_configs *tg* - get all configs associated with tg id. \n/check_connection - show connections of *all* or by tg id. \n\nContact with users: \n\n/broadcast *message* - send message to all users in database. \n/message *tg* *message* - send message to specified by tg user. \n\nControl user's activity: \n\n/block_user *tg* - block user if it's possible, check the status table. \n/unblock_user *tg* - unblock user if it's possible, check the status table. \n/add_new_user *name*:*ip*:*tg*:*config_name* - add new user in database. \n/remove_user *ip* - remove user from database by ip. \n/anathem_user *tg* - eternal curse on user. \n/mercy_user *tg* - mercy user from eternal curse. \n\nWireguard commands: \n\n/create_new_config *config_name* - create brand new config for Wireguard and activate it. ")
+        send_msg_updt(user_id, "/help - show all commands. \n\nGet info: \n\n/show_users - show all users table. \n/show_time - show all users time table. \n/show_configs - show all configs table. \n/get_configs *tg* - get all configs associated with tg id. \n/check_connection - show connections of *all* or by tg id. \n\nContact with users: \n\n/broadcast *message* - send message to all users in database. \n/message *tg* *message* - send message to specified by tg user. \n\nControl user's activity: \n\n/block_user *tg* - block user if it's possible, check the status table. \n/unblock_user *tg* - unblock user if it's possible, check the status table. \n/add_new_user *name*:*ip*:*tg*:*config_name* - add new user in database. \n/remove_user *ip* - remove user from database by ip. \n/anathem_user *tg* - eternal curse on user. \n/mercy_user *tg* - mercy user from eternal curse. \n\nWireguard commands: \n\n/create_new_config *config_name* - create brand new config for Wireguard and activate it. \n/get_server_config - get server config file. ")
 
 #Admin function for get all table with users.
 @bot.message_handler(commands=['show_users'])
@@ -363,7 +363,7 @@ def add_new_user(message):
     else:
         send_msg_updt(user_id, "Fuck off man, I have a job to do")
 
-#Admin function for create new user that will be added to users, time and config tables. It's more about specific config than bran new client.
+#Admin function for create new user that will be added to users, time and config tables. It's more about specific config than client.
 @bot.message_handler(commands=['add_new_user'])
 def add_new_user(message):
     user_id = message.from_user.id
@@ -385,7 +385,7 @@ def add_new_user(message):
     else:
         send_msg_updt(user_id, "Fuck off man, I have a job to do")
 
-#Admin function for remove user from users, time and config tables by his ip. It's more about specific config than bran new client.
+#Admin function for remove user from users, time and config tables by his ip. It's more about specific config than client.
 @bot.message_handler(commands=['remove_user'])
 def remove_user(message):
     user_id = message.from_user.id
@@ -421,6 +421,19 @@ def remove_user(message):
     else:
         send_msg_updt(user_id, "Fuck off man, I have a job to do")
 
+#Admin function get server config file.
+@bot.message_handler(commands=['get_server_config'])
+def remove_user(message):
+    user_id = message.from_user.id
+    if  check_rights(user_id) == 0:
+        tmp = module_wireguard.get_server_config()
+        send_msg_updt(user_id, tmp)
+
+    elif check_rights(user_id) == 1:
+        send_msg_updt_with_menu(user_id, "You have no rights for it", reply_markup=markup)
+    else:
+        send_msg_updt(user_id, "Fuck off man, I have a job to do")
+
 #Universal help command for users and for admin. More for admin, it's a lot of possible commands and no menu for him.
 @bot.message_handler(commands=['help'])
 def help(message):
@@ -436,7 +449,7 @@ def help(message):
         #module_chat.check(user_id, message.chat.id)
 
     elif check_rights(user_id) == 0:
-        send_msg_updt(user_id, "/help - show all commands. \n\nGet info: \n\n/show_users - show all users table. \n/show_time - show all users time table. \n/show_configs - show all configs table. \n/get_configs *tg* - get all configs associated with tg id. \n/check_connection - show connections of *all* or by tg id. \n\nContact with users: \n\n/broadcast *message* - send message to all users in database. \n/message *tg* *message* - send message to specified by tg user. \n\nControl user's activity: \n\n/block_user *tg* - block user if it's possible, check the status table. \n/unblock_user *tg* - unblock user if it's possible, check the status table. \n/add_new_user *name*:*ip*:*tg*:*config_name* - add new user in database. \n/remove_user *ip* - remove user from database by ip. \n/anathem_user *tg* - eternal curse on user. \n/mercy_user *tg* - mercy user from eternal curse. \n\nWireguard commands: \n\n/create_new_config *config_name* - create brand new config for Wireguard and activate it. ")
+        send_msg_updt(user_id, "/help - show all commands. \n\nGet info: \n\n/show_users - show all users table. \n/show_time - show all users time table. \n/show_configs - show all configs table. \n/get_configs *tg* - get all configs associated with tg id. \n/check_connection - show connections of *all* or by tg id. \n\nContact with users: \n\n/broadcast *message* - send message to all users in database. \n/message *tg* *message* - send message to specified by tg user. \n\nControl user's activity: \n\n/block_user *tg* - block user if it's possible, check the status table. \n/unblock_user *tg* - unblock user if it's possible, check the status table. \n/add_new_user *name*:*ip*:*tg*:*config_name* - add new user in database. \n/remove_user *ip* - remove user from database by ip. \n/anathem_user *tg* - eternal curse on user. \n/mercy_user *tg* - mercy user from eternal curse. \n\nWireguard commands: \n\n/create_new_config *config_name* - create brand new config for Wireguard and activate it. \n/get_server_config - get server config file. ")
 
     else:
         send_msg_updt(user_id, "Fuck off man, I have a job to do")

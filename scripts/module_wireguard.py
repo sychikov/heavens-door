@@ -20,6 +20,11 @@ def get_names(ips):
          #names = ''.join(example).split("\n")
     return(names)
 
+#Get server config info.
+def get_server_config():
+    server_config_str = "UserAddress = " + server_config.UserAddress + "*\nServerPublicKey = " + server_config.ServerPublicKey + " \nEndPoint = " + server_config.EndPoint
+    return server_config_str
+
 #Get config from it's name.'
 def get_config(name):
         try:

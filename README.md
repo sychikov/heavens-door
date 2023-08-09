@@ -14,39 +14,40 @@ Add Telegram API Token to config file .bot_token ```echo -n "TOKEN" > .bot_token
 ```sudo ./new_bot.py```
 ## Admin commands
 ```
-help - show all commands. 
+/help - show all commands. 
 
 Get info: 
 
-show_users - show all users table. 
-show_time - show all users time table. 
-show_configs - show all configs table. 
-get_configs *tg* - get all configs associated with tg id. 
-check_connection - show connections of *all* or by tg id. 
+/show_users - show all users table. 
+/show_time - show all users time table. 
+/show_configs - show all configs table. 
+/get_configs *tg* - get all configs associated with tg id. 
+/check_connection - show connections of *all* or by tg id. 
 
 Contact with users: 
 
-broadcast *message* - send message to all users in database. 
-message *tg* *message* - send message to specified by tg user. 
+/broadcast *message* - send message to all users in database. 
+/message *tg* *message* - send message to specified by tg user. 
 
 Control user's activity: 
 
-block_user *tg* - block user if it's possible, check the status table. 
-unblock_user *tg* - unblock user if it's possible, check the status table. 
-add_new_user *name*:*ip*:*tg*:*config_name* - add new user in database. 
-remove_user *ip* - remove user from database by ip. 
-anathem_user *tg* - eternal curse on user. 
-mercy_user *tg* - mercy user from eternal curse. 
+/block_user *tg* - block user if it's possible, check the status table. 
+/unblock_user *tg* - unblock user if it's possible, check the status table. 
+/add_new_user *name*:*ip*:*tg*:*config_name* - add new user in database. 
+/remove_user *ip* - remove user from database by ip. 
+/anathem_user *tg* - eternal curse on user. 
+/mercy_user *tg* - mercy user from eternal curse. 
 
 Wireguard commands: 
 
-create_new_config *config_name* - create brand new config for Wireguard and activate it.
+/create_new_config *config_name* - create brand new config for Wireguard and activate it. 
+/get_server_config - get server config file. 
 ```
 ## User commands
 ```
-help - show all commands.
-unblock - unblock user if it's possible.
-time - show your active time.
-status - show your status.
-configs - show your configs.
+/help - show all commands.
+/unblock - unblock user if it's possible.
+/time - show your active time.
+/status - show your status.
+/configs - show your configs.
 ```
