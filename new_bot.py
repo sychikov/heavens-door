@@ -298,12 +298,15 @@ def my_status(message):
     user_id = message.from_user.id
     if  check_rights(user_id) == 0:
         mess = message.text.split(" ")
-        tg_id = mess[1]
-        ips = get_my_ips(tg_id)
-        names = module_wireguard.get_names(ips)
-        for name in names:
-            tmp = "`" + module_wireguard.get_config(name) + "`"
-            send_msg_updt_with_menu_and_markdown(user_id, tmp)
+        try:
+            tg_id = mess[1]
+            ips = get_my_ips(tg_id)
+            names = module_wireguard.get_names(ips)
+            for name in names:
+                tmp = "`" + module_wireguard.get_config(name) + "`"
+                send_msg_updt_with_menu_and_markdown(user_id, tmp)
+        except:
+            send_msg_updt_with_menu_and_markdown(user_id, "You sent no user tg")
     else:
         send_msg_updt(user_id, "Fuck off man, I have a job to do")
 
