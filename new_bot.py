@@ -545,7 +545,7 @@ def eternal_circle_of_pain():
     global bot
     try:
         bot.polling(none_stop=True)
-    except (ConnectionAbortedError, ConnectionResetError, ConnectionRefusedError, ConnectionError):
+    except (ConnectionAbortedError, ConnectionResetError, ConnectionRefusedError, ConnectionError, RemoteDisconnected):
         #print("ConnectionAbortedError")
         time.sleep(2)
         bot.stop_polling()
