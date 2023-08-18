@@ -539,6 +539,9 @@ def check_users_time():
                 print("Message was sent")
             timerTillMessage = 0
 
+#Import library for catch exception below
+from http.client import RemoteDisconnected
+
 #Thread for respawn bot if that mf will fall.
 def eternal_circle_of_pain():
     import time
