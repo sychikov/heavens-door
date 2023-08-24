@@ -1,4 +1,7 @@
 #!/bin/python3
+import time
+#Delay for previous bot stopped working
+time.sleep(5)
 
 import os
 #Prepare path to bot token
@@ -516,7 +519,6 @@ def get_text_messages(message):
 
 #Thread for check users time, check if someone of them online for too long and block them if they deserved it.
 def check_users_time():
-    import time
     timerTillMessage = 0
     while True:
         module_control_time.check_time()
@@ -539,12 +541,8 @@ def check_users_time():
                 print("Message was sent")
             timerTillMessage = 0
 
-#Import library for catch exception below
-from http.client import RemoteDisconnected
-
 #Thread for respawn bot if that mf will fall.
 def eternal_circle_of_pain():
-    import time
     global bot
     try:
         bot.polling(none_stop=True)
@@ -552,7 +550,12 @@ def eternal_circle_of_pain():
         #print("ConnectionAbortedError")
         time.sleep(2)
         bot.stop_polling()
-        bot = spawn_bot(token)
+        try:
+            bot = spawn_bot(token)
+        except:
+            #I know that it's terrible desigion, but I have no another idea how to prevent bot from remote disconnection with TG servers.
+            subprocess.check_output("systemctl restart heavens-door.service", shell=True)
+            sys.exit()
 
 #Fix problem wirh falling bot after a 24 hours of work.
 def send_msg_updt(telegram_id, msg):
