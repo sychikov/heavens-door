@@ -1,7 +1,7 @@
 #!/bin/python3
-import time
+import time as imported_time
 #Delay for previous bot stopped working
-time.sleep(5)
+imported_time.sleep(5)
 
 import os
 #Prepare path to bot token
@@ -531,7 +531,7 @@ def check_users_time():
                     send_msg_updt(user_id[0], "Your connection will be blocked in 10 minutes. You're walking on the really thin ice, man.\n")
                 except:
                     print("User with tg: "+user_id[0]+"; still didn't send to bot any messages")
-        time.sleep(600)
+        imported_time.sleep(600)
         #One more try to prevent bot from falling
         timerTillMessage = timerTillMessage + 10
         if timerTillMessage > 290:
@@ -548,13 +548,14 @@ def eternal_circle_of_pain():
         bot.polling(none_stop=True)
     except (ConnectionAbortedError, ConnectionResetError, ConnectionRefusedError, ConnectionError, RemoteDisconnected):
         #print("ConnectionAbortedError")
-        time.sleep(2)
+        imported_time.sleep(2)
         bot.stop_polling()
         try:
             bot = spawn_bot(token)
         except:
             #I know that it's terrible desigion, but I have no another idea how to prevent bot from remote disconnection with TG servers.
             subprocess.check_output("systemctl restart heavens-door.service", shell=True)
+            print("Heavens door was just closed. But belive and they till be onened again.\n\n\n\n\n\n")
             sys.exit()
 
 #Fix problem wirh falling bot after a 24 hours of work.
@@ -563,7 +564,7 @@ def send_msg_updt(telegram_id, msg):
         bot.send_message(telegram_id, msg)
     except (ConnectionAbortedError, ConnectionResetError, ConnectionRefusedError, ConnectionError):
         #print("ConnectionError - Sending again after 5 seconds!!!")
-        time.sleep(2)
+        imported_time.sleep(2)
         send_msg_updt(telegram_id, msg)
 
 #Fix problem wirh falling bot after a 24 hours of work, but for regular clients.
@@ -572,7 +573,7 @@ def send_msg_updt_with_menu(telegram_id, msg, reply_markup=markup):
         bot.send_message(telegram_id, msg, reply_markup=markup)
     except (ConnectionAbortedError, ConnectionResetError, ConnectionRefusedError, ConnectionError):
         #print("ConnectionError - Sending again after 5 seconds!!!")
-        time.sleep(2)
+        imported_time.sleep(2)
         send_msg_updt_with_menu(telegram_id, msg, reply_markup=markup)
 
 #Fix problem wirh falling bot after a 24 hours of work, but with markdown
@@ -581,7 +582,7 @@ def send_msg_updt_with_menu_and_markdown(telegram_id, msg):
         bot.send_message(telegram_id, msg, reply_markup=markup, parse_mode='MarkdownV2')
     except (ConnectionAbortedError, ConnectionResetError, ConnectionRefusedError, ConnectionError):
         #print("ConnectionError - Sending again after 5 seconds!!!")
-        time.sleep(2)
+        imported_time.sleep(2)
         send_msg_updt_with_menu_and_markdown(telegram_id, msg)
 
 #Main function
@@ -592,7 +593,7 @@ def send_msg_updt_with_menu_and_markdown(telegram_id, msg):
 #    module_control_time.check_time()
     #Block users that active too long
 #    module_control_disturbers.control()
-#    time.sleep(600)
+#    imported_time.sleep(600)
 from threading import Thread
 main_thread = Thread(target=check_users_time)
 secondary_thread = Thread(target=eternal_circle_of_pain)
