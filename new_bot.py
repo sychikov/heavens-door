@@ -1,7 +1,7 @@
 #!/bin/python3
 import time as imported_time
 #Delay for previous bot stopped working
-imported_time.sleep(5)
+#imported_time.sleep(5)
 
 import os
 #Prepare path to bot token
@@ -541,6 +541,9 @@ def check_users_time():
                 print("Message was sent")
             timerTillMessage = 0
 
+#Import library for catch exception below
+from http.client import RemoteDisconnected
+
 #Thread for respawn bot if that mf will fall.
 def eternal_circle_of_pain():
     global bot
@@ -554,7 +557,7 @@ def eternal_circle_of_pain():
             bot = spawn_bot(token)
         except:
             #I know that it's terrible desigion, but I have no another idea how to prevent bot from remote disconnection with TG servers.
-            subprocess.check_output("systemctl restart heavens-door.service", shell=True)
+            #subprocess.check_output("systemctl restart heavens-door.service", shell=True)
             print("Heavens door was just closed. But belive and they till be onened again.\n\n\n\n\n\n")
             sys.exit()
 
