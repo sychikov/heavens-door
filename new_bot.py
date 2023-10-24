@@ -4,6 +4,8 @@ import time as imported_time
 #imported_time.sleep(5)
 
 import os
+
+import requests
 #Prepare path to bot token
 main_path = os.path.dirname(os.path.abspath(__file__))
 #Get bot token from file
@@ -549,7 +551,7 @@ def eternal_circle_of_pain():
     global bot
     try:
         bot.polling(none_stop=True)
-    except (ConnectionAbortedError, ConnectionResetError, ConnectionRefusedError, ConnectionError, RemoteDisconnected):
+    except (ConnectionAbortedError, ConnectionResetError, ConnectionRefusedError, requests.exceptions.ConnectionError, RemoteDisconnected):
         #print("ConnectionAbortedError")
         imported_time.sleep(2)
         bot.stop_polling()
@@ -599,6 +601,7 @@ def send_msg_updt_with_menu_and_markdown(telegram_id, msg):
 #    imported_time.sleep(600)
 from threading import Thread
 main_thread = Thread(target=check_users_time)
+main_thread.daemon = True
 secondary_thread = Thread(target=eternal_circle_of_pain)
 main_thread.start()
 secondary_thread.start()
