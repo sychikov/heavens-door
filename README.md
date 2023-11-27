@@ -6,9 +6,9 @@ Tired of people who use your VPN for too long? That bot will warn them first and
 
 Install sqlite: ```sudo apt install sqlite3```
 
-Install the database: ```./setup.py```
-
 Install Wireguard: ```sudo apt install wireguard```
+
+Install the database: ```./setup.py```
 
 Add Telegram API Token to config file .bot_token ```echo -n "TOKEN" > .bot_token```
 ## Using
