@@ -25,7 +25,18 @@ def get_server_config():
     server_config_str = "UserAddress = " + server_config.UserAddress + "*\nServerPublicKey = " + server_config.ServerPublicKey + " \nEndPoint = " + server_config.EndPoint
     return server_config_str
 
-#Get config from it's name.'
+#Create Wireguard server config
+def create_wg_server_config():
+        try:
+                #do smth
+                ServerWgConfig = open(dir + "/configs/wghub.conf")
+                ServerWgConfig.write("\#Maden by Heavens door\n[Interface]\nAddress = 10.0.0.1/24\nListenPort = 54817\nPrivateKey = " + server_config.ServerPrivateKey + "\nSaveConfig = false\nMTU = 1280\nPostUp = iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o eth0 -j TCPMSS --clamp-mss-to-pmtu\nPostUp = iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE\nPostDown = iptables -D FORWARD -i %i -j ACCEPT\nPostDown = iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE\nPostDown = iptables -t mangle -D POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o eth0 -j TCPMSS --clamp-mss-to-pmtu\nPostUp = sysctl -q -w net.ipv4.ip_forward=1\nPostDown = sysctl -q -w net.ipv4.ip_forward=0")
+                ServerWgConfig.close()
+                return 0
+        except:
+                return 1
+
+#Get config from it's name
 def get_config(name):
         try:
             path = dir + "/configs/" + name
