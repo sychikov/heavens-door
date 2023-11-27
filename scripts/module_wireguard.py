@@ -22,7 +22,7 @@ def get_names(ips):
 
 #Get server config info.
 def get_server_config():
-    server_config_str = "UserAddress = " + server_config.UserAddress + "*\nServerPublicKey = " + server_config.ServerPublicKey + " \nEndPoint = " + server_config.EndPoint
+    server_config_str = "UserAddress = " + server_config.UserAddress + "*\nServerPublicKey = " + server_config.ServerPublicKey + " \nEndPoint = " + server_config.EndPoint + "\nServerPrivateKey = " + server_config.ServerPrivateKey
     return server_config_str
 
 #Create Wireguard server config
