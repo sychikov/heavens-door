@@ -2,6 +2,7 @@
 import sys
 import os
 from scripts import module_add_admin
+from scripts import module_wireguard
 import subprocess
 
 #Variables
@@ -17,7 +18,7 @@ dir = "/".join((os.path.dirname(os.path.abspath(__file__))).split("/")[:-1])
 from scripts import module_create_database
 module_create_database.create()
 
-#Create server config
+#Create heavens-door server config
 def create_server_config():
         try:
                 ip = input("What is your server public IP address? ")
@@ -31,24 +32,35 @@ def create_server_config():
         except:
                 return 1
 
-#Create Wireguard server config. Yeah, it's a different thing
+#Create Wireguard server config from heavens-door config file
 def create_wg_server_config():
         try:
-                #do something idk, you're author there
-
-                return 1
-        except:
+                module_wireguard.create_wg_server_config()
                 return 0
+        except:
+                return 1
+
+
 #Create admin user
 def create_admin():
         name = input("What is your admin name? ")
-        ip = input("What is your admin ip? ")
+        #ip = input("What is your admin ip? ")
+        ip = UserAddress + "1"
         tg = input("What is your admin Telegram id? ")
-        config_name = input("What is your configuration file name? ")
+        #config_name = input("What is your configuration file name? ")
+        config_name = module_wireguard.create_new_config(name)
         return module_add_admin.add(name+":"+ip+":"+tg+":"+config_name)
 
 
-if create_admin() == 0:
-        print("Admin was added succesfully.")
+if create_server_config() == 0:
+        print("[ * ] Heavens-door config file created successfully")
 
-print("Installation completed")
+        if create_wg_server_config() == 0:
+                print("[ * ] Wireguard server config created successfully")
+
+                if create_admin() == 0:
+                        print("[ * ] Admin user was added succesfully")
+
+                        #There will be added creatio of daemon of heavens-door
+                        print("[ + ] Installation completed")
+
