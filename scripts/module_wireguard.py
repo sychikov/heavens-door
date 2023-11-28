@@ -28,7 +28,6 @@ def get_server_config():
 #Create Wireguard server config
 def create_wg_server_config():
         try:
-                #Probably will return with the next line symbol, be careful
                 DefaultInterface = subprocess.getoutput("ip route list default | awk {'print $5'}")
                 ServerWgConfig = open(dir + "/configs/wghub.conf")
                 ServerWgConfig.write("\#Maden by Heavens door\n[Interface]\nAddress = 10.0.0.1/24\nListenPort = 54817\nPrivateKey = " + server_config.ServerPrivateKey + "\nSaveConfig = false\nMTU = 1280\nPostUp = iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o " + DefaultInterface + " -j TCPMSS --clamp-mss-to-pmtu\nPostUp = iptables -t nat -A POSTROUTING -o " + DefaultInterface + " -j MASQUERADE\nPostDown = iptables -D FORWARD -i %i -j ACCEPT\nPostDown = iptables -t nat -D POSTROUTING -o " + DefaultInterface + " -j MASQUERADE\nPostDown = iptables -t mangle -D POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o " + DefaultInterface + " -j TCPMSS --clamp-mss-to-pmtu\nPostUp = sysctl -q -w net.ipv4.ip_forward=1\nPostDown = sysctl -q -w net.ipv4.ip_forward=0")
