@@ -1,19 +1,30 @@
 #!/bin/python3
 from scripts import module_database
+import wgconfig
+
 
 #Input should look like: "/remove_user *ip*"
 
 #remove user from database
-def remove_from_database(ip):
+def remove_from_database(ip: str):
         try:
-                result = module_database.change("delete from users where ip = \"" + ip + "\"")
-                result = module_database.change("delete from time where ip = \"" + ip + "\"")
-                result = module_database.change("delete from configs where ip = \"" + ip + "\"")
+                cfg = wgconfig.WGConfig("configs/wghub.conf")
+                cfg.read_file()
+
+                for peer_data in cfg.get_peers(False).values():
+                        if ip in peer_data["AllowedIPs"]:
+                                cfg.del_peer(peer_data["PublicKey"])
+                                break
+
+                cfg.write_file()
+
+                module_database.change("delete from users where ip = \"" + ip + "\"")
+                module_database.change("delete from time where ip = \"" + ip + "\"")
+                module_database.change("delete from configs where ip = \"" + ip + "\"")
                 return 0
-        except:
+        except Exception as e:
+                print(e)
                 return 1
-        #print("insert into users values (" + str(number) + ", \"" + user[0] + "\", \"" + user[1] + "\", " + " 0, \"" + user[2] + "\")")
-        #print(result)
 
 #Main function
 def remove(ip):
@@ -22,5 +33,5 @@ def remove(ip):
         else:
                 return 1
 
-
-#print(remove("10.10.10.10"))
+if __name__ == "__main__":
+        print(remove_from_database("<>"))
