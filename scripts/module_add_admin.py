@@ -1,6 +1,6 @@
 #!/bin/python3
 from scripts import module_database
-from database import statuses
+from scripts import statuses
 admin = [""]*4
 
 #Input should look like: "/add_admin name:ip:tg:config_name"

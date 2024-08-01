@@ -3,3 +3,4 @@
 /scripts/__pycache__  
 /configs  
 /scripts/server_config.py
+.venv
