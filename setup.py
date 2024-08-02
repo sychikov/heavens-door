@@ -22,16 +22,20 @@ module_create_database.create()
 def create_server_config():
         try:
                 ip = input("What is your server public IP address? ")
-                global EndPoint = ip + ":54817"
+                global EndPoint 
+                EndPoint = ip + ":54817"
                 command = "wg genkey | tee " + dir + "/configs/privatekey | wg pubkey > " + dir + "/configs/publickey"
                 tmp = subprocess.getoutput([command])
-                global ServerPublicKey = open(dir + '/configs/publickey').read()
-                global ServerPrivateKey = open(dir + '/configs/privatekey').read()
+                global ServerPublicKey 
+                ServerPublicKey = open(dir + '/configs/publickey').read()
+                global ServerPrivateKey 
+                ServerPrivateKey = open(dir + '/configs/privatekey').read()
                 ServerConfig = open(dir + "/scripts/server_config.py", "w")
                 ServerConfig.write('UserAddress = \"' + UserAddress + '\"\nServerPublicKey = \"' + ServerPublicKey + '\"\nEndPoint = \"' + EndPoint + '\"\nServerPrivateKey = \"' + ServerPrivateKey + '\"')
                 ServerConfig.close()
                 return 0
-        except:
+        except Exception as e:
+                print(e)
                 return 1
 
 #Create Wireguard server config from heavens-door config file

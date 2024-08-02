@@ -32,7 +32,11 @@ def create_table_configs(path):
 #Path for creating database
 def create_path():
         global database_name
-        return "/".join((os.path.dirname(os.path.abspath(__file__))).split("/")[:-1]) + "/database/"
+        path = "/".join((os.path.dirname(os.path.abspath(__file__))).split("/")[:-1]) + f"/database/{database_name}"
+
+        if not os.path.exists(path):
+                open(path, "w").close()
+        return path
 
 #Add zero user
 #def add_zero_user(path):
@@ -44,6 +48,6 @@ def create():
 #       print(path)
         create_table_users(path)
         create_table_time(path)
-        create_table_config(path)
+        create_table_configs(path)
 #add_zero_user(path)
 #dir = '/'.join(os.path.abspath(os.curdir).split("/")[:-1])+"/database/"
