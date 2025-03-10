@@ -292,8 +292,8 @@ def my_status(message):
         ips = get_my_ips(user_id)
         names = module_wireguard.get_names(ips)
         for name in names:
-            tmp = "`" + module_wireguard.get_config(name) + "`"
-            send_msg_updt_with_menu_and_markdown(user_id, tmp)
+            tmp = module_wireguard.get_config(name)
+            send_file_updt_with_menu(user_id, tmp)
     else:
         send_msg_updt(user_id, "Fuck off man, I have a job to do")
 
@@ -576,6 +576,15 @@ def send_msg_updt(telegram_id, msg):
 def send_msg_updt_with_menu(telegram_id, msg, reply_markup=markup):
     try:
         bot.send_message(telegram_id, msg, reply_markup=markup)
+    except (ConnectionAbortedError, ConnectionResetError, ConnectionRefusedError, ConnectionError):
+        #print("ConnectionError - Sending again after 5 seconds!!!")
+        imported_time.sleep(2)
+        send_msg_updt_with_menu(telegram_id, msg, reply_markup=markup)
+
+#Same stuff, but for file send
+def send_file_updt_with_menu(telegram_id, config, reply_markup=markup):
+    try:
+        bot.send_document(telegram_id, config, reply_markup=markup)
     except (ConnectionAbortedError, ConnectionResetError, ConnectionRefusedError, ConnectionError):
         #print("ConnectionError - Sending again after 5 seconds!!!")
         imported_time.sleep(2)
