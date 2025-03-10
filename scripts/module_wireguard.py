@@ -40,7 +40,7 @@ def create_wg_server_config():
 def get_config(name):
         try:
             path = dir + "/configs/" + name
-            config = open(path).read()
+            config = open(path)
             #print(config)
             return config
         except:
