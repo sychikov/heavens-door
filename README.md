@@ -44,7 +44,7 @@ Control user's activity:
 
 Wireguard commands: 
 
-/create_new_config *config_name* - create brand new config for Wireguard and activate it. 
+/create_new_config *config_name* - create brand new config for Wireguard and activate it (15 symbols max). 
 /get_server_config - get server config file. 
 ```
 ## User commands
