@@ -1,5 +1,5 @@
 .bot_token  
-/database/origin  
+/database/*  
 /scripts/__pycache__  
 /configs  
 /scripts/server_config.py
