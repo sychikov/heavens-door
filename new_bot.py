@@ -421,8 +421,13 @@ def remove_user(message):
     user_id = message.from_user.id
     if  check_rights(user_id) == 0:
         mess = message.text.split(" ")
-        tmp = module_wireguard.create_new_config(mess[1])
-        send_msg_updt(user_id, tmp)
+        config_name = mess[1]
+        config_name = config_name.split(".")
+        if len(config_name[0]) > 15:
+            send_msg_updt_with_menu(user_id, "Too long name, make it less than 15 symbols", reply_markup=markup)
+        else:
+            tmp = module_wireguard.create_new_config(mess[1])
+            send_msg_updt(user_id, tmp)
 
     elif check_rights(user_id) == 1:
         send_msg_updt_with_menu(user_id, "You have no rights for it", reply_markup=markup)
