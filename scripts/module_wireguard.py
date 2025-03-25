@@ -57,6 +57,9 @@ def create_new_config(name):
     UserCounterFile.write(str(int(UserCounter)+1))
     UserCounterFile.close()
 
+    #Take new ip-address and send it back to prevent misuse
+    UserIpAddress = server_config.UserAddress + str(int(UserCounter)+1)
+
     #Create config file
     ConfigFile = open(dir + '/configs/wgclient_' + name + ".conf", 'w')
     ConfigFile.write(brand_new_config)
@@ -72,4 +75,4 @@ def create_new_config(name):
     tmp = subprocess.getoutput(["cp " + dir + "/configs/wghub.conf /etc/wireguard/wghub.conf"])
     tmp = subprocess.getoutput(["wg-quick up wghub"])
 
-    return name + ".conf"
+    return name + ".conf   " + UserIpAddress
