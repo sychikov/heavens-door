@@ -35,6 +35,7 @@ Contact with users:
 
 Control user's activity: 
 
+/easy_add *name*:*tg* - add user by easy way with only name and telegram id. 
 /block_user *tg* - block user if it's possible, check the status table. 
 /unblock_user *tg* - unblock user if it's possible, check the status table. 
 /add_new_user *name*:*ip*:*tg*:*config_name* - add new user in database. 
