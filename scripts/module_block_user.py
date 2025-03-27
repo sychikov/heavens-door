@@ -51,17 +51,21 @@ def block_if_was_blocked():
         if ips_db != '':
                 ips_iptables = get_blocked_ips_from_iptables()
                 for ip in ips_db:
-                        if ip not in ips_iptables:
+                        if (ip not in ips_iptables) and (ip != ''):
                                 block_single_ip(ip)
                 return 0
         else:
                 return 1
 
 def get_ips_blocked_from_db():
-        return module_database.get("select ip from users where status == " + str(statuses.FlagBlocked))
+        ips = module_database.get("select ip from users where status == " + str(statuses.FlagBlocked))
+        ips = ''.join(ips).split("\n")
+        return ips
 
 def get_blocked_ips_from_iptables():
-        return subprocess.getoutput(["iptables -L | grep REJECT | awk '{print $4}'"])
+        ips = subprocess.getoutput(["iptables -L | grep REJECT | awk '{print $4}'"])
+        ips = ''.join(ips).split("\n")
+        return ips
 
 def block_single_ip(ip):
         subprocess.check_output("iptables -A FORWARD -s " + ip + " -j REJECT", shell=True)

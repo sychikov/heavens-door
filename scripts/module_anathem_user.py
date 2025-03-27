@@ -50,17 +50,22 @@ def anathem_if_was_blocked():
         if ips_db != '':
                 ips_iptables = get_anathemed_ips_from_iptables()
                 for ip in ips_db:
-                        if ip not in ips_iptables:
+                        if (ip not in ips_iptables) and (ip != ''):
                                 anathem_single_ip(ip)
                 return 0
         else:
                 return 1
 
 def get_ips_anathemed_from_db():
-        return module_database.get("select ip from users where status == " + str(statuses.FlagAnathemed))
+        ips = module_database.get("select ip from users where status == " + str(statuses.FlagAnathemed))
+        ips = ''.join(ips).split("\n")
+        return ips
+
 
 def get_anathemed_ips_from_iptables():
-        return subprocess.getoutput(["iptables -L | grep REJECT | awk '{print $4}'"])
+        ips = subprocess.getoutput(["iptables -L | grep REJECT | awk '{print $4}'"])
+        ips = ''.join(ips).split("\n")
+        return ips
 
 def anathem_single_ip(ip):
         subprocess.check_output("iptables -A FORWARD -s " + ip + " -j REJECT", shell=True)
