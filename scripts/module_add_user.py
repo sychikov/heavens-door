@@ -43,20 +43,23 @@ def add(new_user):
 #Function for easily add user
 #Input should look like: /easy_add name:tg
 def easy_add(new_user):
-        parsed_user = new_user.split(":")
-        name = parsed_user[0]
-        wg_info = module_wireguard.create_new_config(name)
-        wg_info = wg_info.split("   ")
+        try:
+                parsed_user = new_user.split(":")
+                name = parsed_user[0]
+                wg_info = module_wireguard.create_new_config(name)
+                wg_info = wg_info.split("   ")
 
-        config_name = wg_info[0]
-        ip_address = wg_info[1]
-        tg_num = parsed_user[1]
+                config_name = wg_info[0]
+                ip_address = wg_info[1]
+                tg_num = parsed_user[1]
 
-        number = int(''.join(module_database.get("select max(id) from users").split("\n")))+1
+                number = int(''.join(module_database.get("select max(id) from users").split("\n")))+1
 
-        result = module_database.change("insert into users values (" + str(number) + ", \"" + name + "\", \"" + ip_address + "\", " + str(statuses.FlagNotBlocked) +",\"" + tg_num + "\")")
-        result = module_database.change("insert into time values (" + str(number) + ", \"" + ip_address + "\", 0, 0)")
-        result = module_database.change("insert into configs values (\"" + ip_address + "\", \"" + config_name + "\")")
-        return 0
+                result = module_database.change("insert into users values (" + str(number) + ", \"" + name + "\", \"" + ip_address + "\", " + str(statuses.FlagNotBlocked) +",\"" + tg_num + "\")")
+                result = module_database.change("insert into time values (" + str(number) + ", \"" + ip_address + "\", 0, 0)")
+                result = module_database.change("insert into configs values (\"" + ip_address + "\", \"" + config_name + "\")")
+                return 0
+        except:
+                return 1
 
 
