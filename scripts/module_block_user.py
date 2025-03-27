@@ -22,7 +22,7 @@ def get_ip(tg):
          list_ip = ''.join(example).split("\n")
          return(list_ip)
 
-#Use ip for block user by ip
+#Use ip for block user by ip list
 def block_user(list_ip):
          for ip in list_ip:
                 subprocess.check_output("iptables -A FORWARD -s " + ip + " -j REJECT", shell=True)
@@ -30,11 +30,8 @@ def block_user(list_ip):
 #Set timer of user activity to zero, other way he'll caught in eternal circle of blocking and unblocking. Now he'll caught in that, but with default cooldown.
 def set_time_to_zero(list_ip):
          for ip in list_ip:
-                #This fucntion looks unfinished, but when I add double quote in the end everythign just breaking. Just leaved it like that, maybe one day I'll research it.
+                #This function looks unfinished, but when I add double quote in the end everythign just breaking. Just leaved it like that, maybe one day I'll research it.
                 module_database.change("update time set hours = 0 where ip = "+str(ip))
-                        #print("iptables -A FORWARD -s", ip, "-j REJECT")
-#               print("Iptables error")
-#Return successful code
 
 def by_tg(tg):
         if str(check_status(tg)[0]) == str(statuses.FlagNotBlocked):
@@ -42,8 +39,31 @@ def by_tg(tg):
                 block_user(ips)
                 change_status(tg)
                 set_time_to_zero(ips)
-#       print("User has been blocked")
                 return 0
         else:
-#       print("User cannot be blocked, because he is already blocked")
                 return 1
+
+#If user was blocked before restart server, iptables lose his rules
+
+#Block user by tg if it was blocked
+def block_if_was_blocked():
+        ips_db = get_ips_blocked_from_db()
+        if ips_db != '':
+                ips_iptables = get_blocked_ips_from_iptables()
+                for ip in ips_db:
+                        if ip not in ips_iptables:
+                                block_single_ip(ip)
+                return 0
+        else:
+                return 1
+
+def get_ips_blocked_from_db():
+        return module_database.get("select ip from users where status == " + str(statuses.FlagBlocked))
+
+def get_blocked_ips_from_iptables():
+        return subprocess.getoutput(["iptables -L | grep REJECT | awk '{print $4}'"])
+
+def block_single_ip(ip):
+        subprocess.check_output("iptables -A FORWARD -s " + ip + " -j REJECT", shell=True)
+
+
