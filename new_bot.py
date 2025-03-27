@@ -565,7 +565,7 @@ def eternal_circle_of_pain():
         except:
             #I know that it's terrible desigion, but I have no another idea how to prevent bot from remote disconnection with TG servers.
             #subprocess.check_output("systemctl restart heavens-door.service", shell=True)
-            print("Heavens door was just closed. But belive and they till be onened again.\n\n\n\n\n\n")
+            print("Heavens door was just closed. But belive and they till be opened again.\n\n\n\n\n\n")
             sys.exit()
 
 #Fix problem wirh falling bot after a 24 hours of work.
@@ -604,15 +604,22 @@ def send_msg_updt_with_menu_and_markdown(telegram_id, msg):
         imported_time.sleep(2)
         send_msg_updt_with_menu_and_markdown(telegram_id, msg)
 
-#Main function
-#import time
 
-#while True:
-    #Add time to active users
-#    module_control_time.check_time()
-    #Block users that active too long
-#    module_control_disturbers.control()
-#    imported_time.sleep(600)
+def update_firewall_rules():
+    master_code = module_database.get("select tg from users where id = 0")
+    master_code = ''.join(master_code)
+    if module_anathem_user.anathem_if_was_blocked() == 0:
+        send_msg_updt_with_menu(master_code, "Anathem list was updated successfully", reply_markup=markup)
+    else:
+        send_msg_updt_with_menu(master_code, "Error with updating anathem list", reply_markup=markup)
+    if module_block_user.block_if_was_blocked() == 0:
+        send_msg_updt_with_menu(master_code, "Block list was updated successfully", reply_markup=markup)
+    else:
+        send_msg_updt_with_menu(master_code, "Error with updating block list", reply_markup=markup)
+
+#Main function
+
+update_firewall_rules()
 from threading import Thread
 main_thread = Thread(target=check_users_time)
 main_thread.daemon = True
