@@ -61,7 +61,7 @@ def create_new_config(name):
     UserIpAddress = server_config.UserAddress + str(int(UserCounter)+1)
 
     #Create config file
-    ConfigFile = open(dir + '/configs/wgclient_' + name + ".conf", 'w')
+    ConfigFile = open(dir + '/configs/' + name + ".conf", 'w')
     ConfigFile.write(brand_new_config)
     ConfigFile.close()
 
