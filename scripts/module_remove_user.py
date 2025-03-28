@@ -1,6 +1,7 @@
 #!/bin/python3
 from scripts import module_database
 import wgconfig
+import os
 
 
 #Input should look like: "/remove_user *ip*"
@@ -8,7 +9,8 @@ import wgconfig
 #remove user from database
 def remove_from_database(ip: str):
         try:
-                cfg = wgconfig.WGConfig("configs/wghub.conf")
+                dir = "/".join((os.path.dirname(os.path.abspath(__file__))).split("/")[:-1])
+                cfg = wgconfig.WGConfig(dir + "/configs/wghub.conf")
                 cfg.read_file()
 
                 for peer_data in cfg.get_peers(False).values():
