@@ -37,7 +37,6 @@ Control user's activity:
 
 /easy_add *name*:*tg* - add user by easy way with only name and telegram id. 
 /block_user *tg* - block user if it's possible, check the status table. 
-/unblock_user *tg* - unblock user if it's possible, check the status table. 
 /remove_peer *ip* - remove peer from database by ip. 
 /anathem_user *tg* - eternal curse on user. 
 /mercy_user *tg* - mercy/unblock user and update database.. 
