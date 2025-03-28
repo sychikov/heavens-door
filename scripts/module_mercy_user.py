@@ -5,7 +5,6 @@ from scripts import module_database
 from scripts import statuses
 
 def check_status(tg):
-
         example = module_database.get("select status from users where tg="+str(tg))
         example = ''.join(example).split("\n")
         return example
@@ -21,22 +20,19 @@ def get_ip(tg):
                 return(list_ip)
 
         except:
-#               print("Database error")
                 sys.exit()
 
-#Use ip for block user by ip
+#Use ip for unblock user by ip
 def mercy_user(list_ip):
         try:
                 for ip in list_ip:
                         subprocess.check_output("iptables -D FORWARD -s " + ip + " -j REJECT", shell=True)
-                        #print("iptables -A FORWARD -s", ip, "-j REJECT")
         except:
-#               print("Iptables error")
                 sys.exit()
-#Return successful code
 
+#This function using for unblock user from block and superblock
 def by_tg(tg):
-        if str(check_status(tg)[0]) == str(statuses.FlagAnathemed):
+        if (str(check_status(tg)[0]) == str(statuses.FlagAnathemed)) or (str(check_status(tg)[0]) == str(statuses.FlagBlocked)):
                 mercy_user(get_ip(tg))
                 change_status(tg)
                 return 0

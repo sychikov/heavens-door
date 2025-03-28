@@ -115,7 +115,7 @@ def start(message):
 #    else:
 #        send_msg_updt(user_id, "/help - show all commands. \n\nGet info: \n/show_users - show all users table. \n/show_time - show all users time table. \n/show_configs - show all configs table. \n/get_configs *tg* - get all configs associated with tg id. \n/check_connection - show connections of *all* or by tg id. \n\nContact with users: \n/broadcast *message* - send message to all users in database. \n/message *tg* *message* - send message to specified by tg user. \n\nControl user's activity: \n/easy_add *name*:*tg* - add user by easy way with only name and telegram id. \n/block_user *tg* - block user if it's possible, check the status table. \n/unblock_user *tg* - unblock user if it's possible, check the status table. \n/add_new_user *name*:*ip*:*tg*:*config_name* - add new user in database. \n/remove_user *ip* - remove user from database by ip. \n/anathem_user *tg* - eternal curse on user. \n/mercy_user *tg* - mercy user from eternal curse. \n\nWireguard commands: \n/create_new_config *config_name* - create brand new config for Wireguard and activate it (15 symbols max). \n/get_server_config - get server config file. ")
     elif check_rights(user_id) == 0:
-        send_msg_updt(user_id, "/help - show all commands. \n\nGet info: \n/show_users - show all users table. \n/show_time - show all users time table. \n/show_configs - show all configs table. \n/get_configs *tg* - get all configs associated with tg id. \n/check_connection - show connections of *all* or by tg id. \n\nContact with users: \n/broadcast *message* - send message to all users in database. \n/message *tg* *message* - send message to specified by tg user. \n\nControl user's activity: \n/easy_add *name*:*tg* - add user by easy way with only name and telegram id. \n/block_user *tg* - block user if it's possible, check the status table. \n/unblock_user *tg* - unblock user if it's possible, check the status table. \n/remove_peer *ip* - remove peer from database and from server config by ip. \n/anathem_user *tg* - eternal curse on user. \n/mercy_user *tg* - mercy user from eternal curse. \n\nWireguard commands: \n/get_server_config - get server config file. ")
+        send_msg_updt(user_id, "/help - show all commands. \n\nGet info: \n/show_users - show all users table. \n/show_time - show all users time table. \n/show_configs - show all configs table. \n/get_configs *tg* - get all configs associated with tg id. \n/check_connection - show connections of *all* or by tg id. \n\nContact with users: \n/broadcast *message* - send message to all users in database. \n/message *tg* *message* - send message to specified by tg user. \n\nControl user's activity: \n/easy_add *name*:*tg* - add user by easy way with only name and telegram id. \n/block_user *tg* - block user if it's possible, check the status table. \n/remove_peer *ip* - remove peer from database and from server config by ip. \n/anathem_user *tg* - eternal curse on user. \n/mercy_user *tg* - mercy/unblock user and update database. \n\nWireguard commands: \n/get_server_config - get server config file. ")
 
 #Admin function for get all table with users.
 @bot.message_handler(commands=['show_users'])
@@ -165,26 +165,26 @@ def block_user(message):
         send_msg_updt(user_id, "Fuck off man, I have a job to do")
 
 #Admin fucntion for unblock user by his tg id.
-@bot.message_handler(commands=['unblock_user'])
-def unblock_user(message):
-    user_id = message.from_user.id
-    if  check_rights(user_id) == 0:
-        mess = message.text.split(" ")
-        result = module_unblock_user.by_tg(mess[1])
-        if result == 0:
-            send_msg_updt(user_id, "User unblocked successfully")
-        else:
-            send_msg_updt(user_id, "User cannot be unblocked")
+#@bot.message_handler(commands=['unblock_user'])
+#def unblock_user(message):
+#    user_id = message.from_user.id
+#    if  check_rights(user_id) == 0:
+#        mess = message.text.split(" ")
+#        result = module_unblock_user.by_tg(mess[1])
+#        if result == 0:
+#            send_msg_updt(user_id, "User unblocked successfully")
+#        else:
+#            send_msg_updt(user_id, "User cannot be unblocked")
 
         #if result.split("\n")[0] == "0":
             #send_msg_updt(user_id, "User unblocked successfully")
         #else:
             #send_msg_updt(user_id, "User cannot be unblocked")
 
-    elif check_rights(user_id) == 1:
-        send_msg_updt_with_menu(user_id, "You have no rights for it", reply_markup=markup)
-    else:
-        send_msg_updt(user_id, "Fuck off man, I have a job to do")
+#    elif check_rights(user_id) == 1:
+#        send_msg_updt_with_menu(user_id, "You have no rights for it", reply_markup=markup)
+#    else:
+#        send_msg_updt(user_id, "Fuck off man, I have a job to do")
 
 #Admin fuction for check current connections. It pings all ips and see if anyone respond
 @bot.message_handler(commands=['check_connection'])
@@ -232,9 +232,9 @@ def mercy_user(message):
         mess = message.text.split(" ")
         result = module_mercy_user.by_tg(mess[1])
         if result == 0:
-            send_msg_updt(user_id, "User merced successfully")
+            send_msg_updt(user_id, "User unblocked successfully")
         else:
-            send_msg_updt(user_id, "User cannot be merced")
+            send_msg_updt(user_id, "User cannot be unblocked")
 
         #if result.split("\n")[0] == "0":
             #send_msg_updt(user_id, "User unblocked successfully")
@@ -462,7 +462,7 @@ def help(message):
 #    elif check_rights(user_id) == 0:
 #        send_msg_updt(user_id, "/help - show all commands. \n\nGet info: \n/show_users - show all users table. \n/show_time - show all users time table. \n/show_configs - show all configs table. \n/get_configs *tg* - get all configs associated with tg id. \n/check_connection - show connections of *all* or by tg id. \n\nContact with users: \n/broadcast *message* - send message to all users in database. \n/message *tg* *message* - send message to specified by tg user. \n\nControl user's activity: \n/easy_add *name*:*tg* - add user by easy way with only name and telegram id. \n/block_user *tg* - block user if it's possible, check the status table. \n/unblock_user *tg* - unblock user if it's possible, check the status table. \n/add_new_user *name*:*ip*:*tg*:*config_name* - add new user in database. \n/remove_user *ip* - remove user from database by ip. \n/anathem_user *tg* - eternal curse on user. \n/mercy_user *tg* - mercy user from eternal curse. \n\nWireguard commands: \n/create_new_config *config_name* - create brand new config for Wireguard and activate it (15 symbols max). \n/get_server_config - get server config file. ")
     elif check_rights(user_id) == 0:
-        send_msg_updt(user_id, "/help - show all commands. \n\nGet info: \n/show_users - show all users table. \n/show_time - show all users time table. \n/show_configs - show all configs table. \n/get_configs *tg* - get all configs associated with tg id. \n/check_connection - show connections of *all* or by tg id. \n\nContact with users: \n/broadcast *message* - send message to all users in database. \n/message *tg* *message* - send message to specified by tg user. \n\nControl user's activity: \n/easy_add *name*:*tg* - add user by easy way with only name and telegram id. \n/block_user *tg* - block user if it's possible, check the status table. \n/unblock_user *tg* - unblock user if it's possible, check the status table. \n/remove_peer *ip* - remove peer from database and from server config by ip. \n/anathem_user *tg* - eternal curse on user. \n/mercy_user *tg* - mercy user from eternal curse. \n\nWireguard commands: \n/get_server_config - get server config file. ")
+        send_msg_updt(user_id, "/help - show all commands. \n\nGet info: \n/show_users - show all users table. \n/show_time - show all users time table. \n/show_configs - show all configs table. \n/get_configs *tg* - get all configs associated with tg id. \n/check_connection - show connections of *all* or by tg id. \n\nContact with users: \n/broadcast *message* - send message to all users in database. \n/message *tg* *message* - send message to specified by tg user. \n\nControl user's activity: \n/easy_add *name*:*tg* - add user by easy way with only name and telegram id. \n/block_user *tg* - block user if it's possible, check the status table. \n/remove_peer *ip* - remove peer from database and from server config by ip. \n/anathem_user *tg* - eternal curse on user. \n/mercy_user *tg* - mercy/unblock user and update database. \n\nWireguard commands: \n/get_server_config - get server config file. ")
 
     else:
         send_msg_updt(user_id, "Fuck off man, I have a job to do")

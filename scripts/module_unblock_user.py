@@ -20,7 +20,6 @@ def get_ip(tg):
                 return(list_ip)
 
         except:
-#               print("Database error")
                 sys.exit()
 
 #Use ip for block user by ip
@@ -28,18 +27,13 @@ def unblock_user(list_ip):
         try:
                 for ip in list_ip:
                         subprocess.check_output("iptables -D FORWARD -s " + ip + " -j REJECT", shell=True)
-                        #print("iptables -A FORWARD -s", ip, "-j REJECT")
         except:
-#               print("Iptables error")
                 sys.exit()
-#Return successful code
 
 def by_tg(tg):
         if str(check_status(tg)[0]) == str(statuses.FlagBlocked):
                 unblock_user(get_ip(tg))
                 change_status(tg)
-#       print("User has been blocked")
                 return 0
         else:
-#       print("User cannot be blocked, because he is already blocked")
                 return 1
