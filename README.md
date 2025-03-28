@@ -38,13 +38,12 @@ Control user's activity:
 /easy_add *name*:*tg* - add user by easy way with only name and telegram id. 
 /block_user *tg* - block user if it's possible, check the status table. 
 /unblock_user *tg* - unblock user if it's possible, check the status table. 
-/remove_user *ip* - remove user from database by ip. 
+/remove_peer *ip* - remove peer from database by ip. 
 /anathem_user *tg* - eternal curse on user. 
 /mercy_user *tg* - mercy user from eternal curse. 
 
 Wireguard commands: 
 
-/create_new_config *config_name* - create brand new config for Wireguard and activate it (15 symbols max). 
 /get_server_config - get server config file. 
 ```
 ## User commands
