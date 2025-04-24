@@ -26,7 +26,7 @@ Get info:
 /show_time - show all users time table. 
 /show_configs - show all configs table. 
 /get_configs *tg* - get all configs associated with tg id. 
-/check_connection - show connections of *all* or by tg id. 
+/check_connection - show connections of all peers. 
 
 Contact with users: 
 

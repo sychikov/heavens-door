@@ -115,7 +115,7 @@ def start(message):
 #    else:
 #        send_msg_updt(user_id, "/help - show all commands. \n\nGet info: \n/show_users - show all users table. \n/show_time - show all users time table. \n/show_configs - show all configs table. \n/get_configs *tg* - get all configs associated with tg id. \n/check_connection - show connections of *all* or by tg id. \n\nContact with users: \n/broadcast *message* - send message to all users in database. \n/message *tg* *message* - send message to specified by tg user. \n\nControl user's activity: \n/easy_add *name*:*tg* - add user by easy way with only name and telegram id. \n/block_user *tg* - block user if it's possible, check the status table. \n/unblock_user *tg* - unblock user if it's possible, check the status table. \n/add_new_user *name*:*ip*:*tg*:*config_name* - add new user in database. \n/remove_user *ip* - remove user from database by ip. \n/anathem_user *tg* - eternal curse on user. \n/mercy_user *tg* - mercy user from eternal curse. \n\nWireguard commands: \n/create_new_config *config_name* - create brand new config for Wireguard and activate it (15 symbols max). \n/get_server_config - get server config file. ")
     elif check_rights(user_id) == 0:
-        send_msg_updt(user_id, "/help - show all commands. \n\nGet info: \n/show_users - show all users table. \n/show_time - show all users time table. \n/show_configs - show all configs table. \n/get_configs *tg* - get all configs associated with tg id. \n/check_connection - show connections of *all* or by tg id. \n\nContact with users: \n/broadcast *message* - send message to all users in database. \n/message *tg* *message* - send message to specified by tg user. \n\nControl user's activity: \n/easy_add *name*:*tg* - add user by easy way with only name and telegram id. \n/block_user *tg* - block user if it's possible, check the status table. \n/remove_peer *ip* - remove peer from database and from server config by ip. \n/anathem_user *tg* - eternal curse on user. \n/mercy_user *tg* - mercy/unblock user and update database. \n\nWireguard commands: \n/get_server_config - get server config file. ")
+        send_msg_updt(user_id, "/help - show all commands. \n\nGet info: \n/show_users - show all users table. \n/show_time - show all users time table. \n/show_configs - show all configs table. \n/get_configs *tg* - get all configs associated with tg id. \n/check_connection - show connections of all peers. \n\nContact with users: \n/broadcast *message* - send message to all users in database. \n/message *tg* *message* - send message to specified by tg user. \n\nControl user's activity: \n/easy_add *name*:*tg* - add user by easy way with only name and telegram id. \n/block_user *tg* - block user if it's possible, check the status table. \n/remove_peer *ip* - remove peer from database and from server config by ip. \n/anathem_user *tg* - eternal curse on user. \n/mercy_user *tg* - mercy/unblock user and update database. \n\nWireguard commands: \n/get_server_config - get server config file. ")
 
 #Admin function for get all table with users.
 @bot.message_handler(commands=['show_users'])
@@ -186,16 +186,12 @@ def block_user(message):
 #    else:
 #        send_msg_updt(user_id, "Fuck off man, I have a job to do")
 
-#Admin fuction for check current connections. It pings all ips and see if anyone respond
+#Admin fuction for check current connections. It check if person sent any packages in last 10 minutes
 @bot.message_handler(commands=['check_connection'])
 def check_connection(message):
     user_id = message.from_user.id
     if  check_rights(user_id) == 0:
-        if " " in message.text:
-            mess = message.text.split(" ")
-            result = module_check_connection.by_tg(mess[1])
-        else:
-            result = module_check_connection.by_tg("all")
+        result = module_check_connection.all_peers()
         send_msg_updt(user_id, result)
     elif check_rights(user_id) == 1:
         send_msg_updt_with_menu(user_id, "You have no rights for it", reply_markup=markup)
@@ -460,9 +456,9 @@ def help(message):
         #module_chat.check(user_id, message.chat.id)
 
 #    elif check_rights(user_id) == 0:
-#        send_msg_updt(user_id, "/help - show all commands. \n\nGet info: \n/show_users - show all users table. \n/show_time - show all users time table. \n/show_configs - show all configs table. \n/get_configs *tg* - get all configs associated with tg id. \n/check_connection - show connections of *all* or by tg id. \n\nContact with users: \n/broadcast *message* - send message to all users in database. \n/message *tg* *message* - send message to specified by tg user. \n\nControl user's activity: \n/easy_add *name*:*tg* - add user by easy way with only name and telegram id. \n/block_user *tg* - block user if it's possible, check the status table. \n/unblock_user *tg* - unblock user if it's possible, check the status table. \n/add_new_user *name*:*ip*:*tg*:*config_name* - add new user in database. \n/remove_user *ip* - remove user from database by ip. \n/anathem_user *tg* - eternal curse on user. \n/mercy_user *tg* - mercy user from eternal curse. \n\nWireguard commands: \n/create_new_config *config_name* - create brand new config for Wireguard and activate it (15 symbols max). \n/get_server_config - get server config file. ")
+#        send_msg_updt(user_id, "/help - show all commands. \n\nGet info: \n/show_users - show all users table. \n/show_time - show all users time table. \n/show_configs - show all configs table. \n/get_configs *tg* - get all configs associated with tg id. \n/check_connection - show connections of all peers. \n\nContact with users: \n/broadcast *message* - send message to all users in database. \n/message *tg* *message* - send message to specified by tg user. \n\nControl user's activity: \n/easy_add *name*:*tg* - add user by easy way with only name and telegram id. \n/block_user *tg* - block user if it's possible, check the status table. \n/unblock_user *tg* - unblock user if it's possible, check the status table. \n/add_new_user *name*:*ip*:*tg*:*config_name* - add new user in database. \n/remove_user *ip* - remove user from database by ip. \n/anathem_user *tg* - eternal curse on user. \n/mercy_user *tg* - mercy user from eternal curse. \n\nWireguard commands: \n/create_new_config *config_name* - create brand new config for Wireguard and activate it (15 symbols max). \n/get_server_config - get server config file. ")
     elif check_rights(user_id) == 0:
-        send_msg_updt(user_id, "/help - show all commands. \n\nGet info: \n/show_users - show all users table. \n/show_time - show all users time table. \n/show_configs - show all configs table. \n/get_configs *tg* - get all configs associated with tg id. \n/check_connection - show connections of *all* or by tg id. \n\nContact with users: \n/broadcast *message* - send message to all users in database. \n/message *tg* *message* - send message to specified by tg user. \n\nControl user's activity: \n/easy_add *name*:*tg* - add user by easy way with only name and telegram id. \n/block_user *tg* - block user if it's possible, check the status table. \n/remove_peer *ip* - remove peer from database and from server config by ip. \n/anathem_user *tg* - eternal curse on user. \n/mercy_user *tg* - mercy/unblock user and update database. \n\nWireguard commands: \n/get_server_config - get server config file. ")
+        send_msg_updt(user_id, "/help - show all commands. \n\nGet info: \n/show_users - show all users table. \n/show_time - show all users time table. \n/show_configs - show all configs table. \n/get_configs *tg* - get all configs associated with tg id. \n/check_connection - show connections of all peers. \n\nContact with users: \n/broadcast *message* - send message to all users in database. \n/message *tg* *message* - send message to specified by tg user. \n\nControl user's activity: \n/easy_add *name*:*tg* - add user by easy way with only name and telegram id. \n/block_user *tg* - block user if it's possible, check the status table. \n/remove_peer *ip* - remove peer from database and from server config by ip. \n/anathem_user *tg* - eternal curse on user. \n/mercy_user *tg* - mercy/unblock user and update database. \n\nWireguard commands: \n/get_server_config - get server config file. ")
 
     else:
         send_msg_updt(user_id, "Fuck off man, I have a job to do")
@@ -626,6 +622,7 @@ def send_msg_updt_with_menu_and_markdown(telegram_id, msg):
 def update_firewall_rules():
     master_code = module_database.get("select tg from users where id = 0")
     master_code = ''.join(master_code)
+    #Send to admin message that blocked and anathemed peer will stay in their position
     if module_anathem_user.anathem_if_was_blocked() == 0:
         send_msg_updt_with_menu(master_code, "Anathem list was updated successfully", reply_markup=markup)
     else:
@@ -634,6 +631,26 @@ def update_firewall_rules():
         send_msg_updt_with_menu(master_code, "Block list was updated successfully", reply_markup=markup)
     else:
         send_msg_updt_with_menu(master_code, "Error with updating block list", reply_markup=markup)
+
+    #Check if COUNT chain exists in iptables
+    tmp = subprocess.getoutput(["iptables -L COUNT"])
+    if "chain `COUNT' in table `filter' is incompatible" not in tmp:
+        send_msg_updt_with_menu(master_code, "Chain COUNT is exist", reply_markup=markup)
+    else:
+        send_msg_updt_with_menu(master_code, "Chain does not exist, creating...", reply_markup=markup)
+        #Create custom chain
+        tmp = subprocess.getoutput(["iptables -N COUNT"])
+        #Add jump from FORWARD chain to COUNT table
+        tmp = subprocess.getoutput(["iptables -A FORWARD -j COUNT"])
+        ips = module_database.get("select ip from users")
+        ips = ''.join(ips).split("\n")
+        ips = [tmp.split(" ")[0] for tmp in ips]
+        for ip in ips:
+            #Add every peer with rule to just return
+            tmp = subprocess.getoutput(["iptables -A COUNT -s " + ip + "-j RETURN"])
+        tmp = subprocess.getoutput(["iptables -Z COUNT"])
+        send_msg_updt_with_menu(master_code, "Chain COUNT was successfully created", reply_markup=markup)
+
 
 #Main function
 

@@ -15,13 +15,12 @@ def get_clients():
 
 #Get clients that can be pinged
 def get_active_clients():
-
-        ips = module_check_connection.by_tg("all")
-        ips = ''.join(ips).split("\n")
+        ips = module_check_connection.get_active_ips()
+#       ips = ''.join(ips).split("\n")
 #       for tmp in ips:
 #               tmp = str(tmp.split(" ")[0])
-        ips = [tmp.split(" ")[0] for tmp in ips]
-        return ips[:-1]
+#        ips = [tmp.split(" ")[0] for tmp in ips]
+        return ips
 
 #Set time of inactive clients to zero
 def set_zero_time(ip):
