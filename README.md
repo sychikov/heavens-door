@@ -1,4 +1,4 @@
-# Heaven's door v1.3
+# Heaven's door v1.4
 
 Telegram bot to control your VPN connection. Can be used for Wireguard VPN to control users, their online time and their connection.
 Tired of people who use your VPN for too long? That bot will warn them first and block if they will go too far and unblock when they will earn your forgiveness. You can create new configs without connect to server by yourself.
@@ -40,6 +40,11 @@ Control user's activity:
 /remove_peer *ip* - remove peer from database by ip. 
 /anathem_user *tg* - eternal curse on user. 
 /mercy_user *tg* - mercy/unblock user and update database.. 
+
+VIP commands: 
+/add_vip *tg* - grant user with divine blessing. 
+/delete_from_vip *tg* - delete user from VIP list.
+VIP users can't be blocked after crossing time limits or by command /block_user
 
 Wireguard commands: 
 
