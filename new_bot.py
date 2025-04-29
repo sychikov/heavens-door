@@ -415,13 +415,13 @@ def my_status(message):
         for ip in ips:
             status = get_my_status(ip)
             if str(status) == str(statuses.FlagBlocked):
-                new_message = new_message + ip + " blocked.\n"
+                new_message =  new_message + "🔐 " + ip + " blocked.\n"
             elif str(status) == str(statuses.FlagNotBlocked):
-                new_message = new_message + ip + " not blocked.\n"
+                new_message = new_message + "🕊 " +  ip + " not blocked.\n"
             elif str(status) == str(statuses.FlagVIP):
-                new_message = new_message + ip + " have VIP status.\n"
+                new_message = new_message + "👑 " + ip + " have VIP status.\n"
             else:
-                new_message = new_message + ip + " was anathemed. You did something really bad, contact your admininstrator or live with that curse.\n"
+                new_message = new_message + "☠️ " + ip + " was anathemed. You did something really bad, contact your admininstrator or live with that curse.\n"
         send_msg_updt_with_menu(user_id, new_message, reply_markup=markup)
     else:
         send_msg_updt(user_id, "Fuck off man, I have a job to do")
