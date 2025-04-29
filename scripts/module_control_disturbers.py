@@ -6,6 +6,7 @@ import collections
 from scripts import module_database
 from scripts import module_block_user
 from scripts import time_limits
+from scripts import module_vip
 
 #Check time of work of users. if someone work with vpn long enough, his ip will be returned
 def check_disturbers():
@@ -34,10 +35,12 @@ def get_tgs(ips):
 #Block disturbers by their telegram ids
 def block_disturbers(tgs):
         for tg in tgs:
-                if module_block_user.by_tg(''.join(tg)) == 0:
-                        print("User with tg " + str(tg) + " has been blocked succesfully")
-                else:
-                        print("User with tg " + str(tg) + " cannot be blocked")
+                tg_tmp = ''.join(tg)
+                if not module_vip.check_vip_status(tg):
+                        if module_block_user.by_tg(tg_tmp) == 0:
+                                print("User with tg " + str(tg) + " has been blocked succesfully")
+                        else:
+                                print("User with tg " + str(tg) + " cannot be blocked")
 
 bad_example = module_database.get("select ip from time where hours = -1")
 bad_example = ''.join(bad_example).split("\n")
@@ -48,7 +51,6 @@ bad_example = get_tgs(bad_example)
 def control():
         disturbers = get_tgs(check_disturbers())
         if disturbers:
-                #print(len(disturbers[0]))
                 print(bad_example)
                 print(disturbers)
                 if disturbers != bad_example:
@@ -58,14 +60,7 @@ def control():
 def get_edgers():
         edgers = get_tgs(check_edgers())
         if edgers:
-                #print(len(disturbers[0]))
-                #print(bad_example)
-                #print(edgers)
                 if edgers != bad_example:
                     return edgers
                 else:
                     return 1
-
-        #else:
-                #print("No one to block(")
-        #time.sleep(5)
