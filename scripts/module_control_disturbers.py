@@ -56,6 +56,17 @@ def control():
                 if disturbers != bad_example:
                     block_disturbers(disturbers)
 
+#Func for alert users right before block
+def get_ready_to_be_blocked():
+        disturbers = get_tgs(check_disturbers())
+        if disturbers:
+                print(bad_example)
+                print(disturbers)
+                if disturbers != bad_example:
+                        return disturbers
+                else:
+                        return 1
+
 #Get list of edgers for send warning.
 def get_edgers():
         edgers = get_tgs(check_edgers())

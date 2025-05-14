@@ -134,7 +134,7 @@ def add_vip(message):
         if result:
             send_msg_updt(user_id, "User granted with divine blessing successfully")
         else:
-            send_msg_updt(user_id, "User cannot be granted with divine blessing")
+            send_msg_updt(user_id, "❗️ User cannot be granted with divine blessing")
 
     elif check_rights(user_id) == 1:
         send_msg_updt_with_menu(user_id, "You have no rights for it", reply_markup=markup)
@@ -152,7 +152,7 @@ def delete_from_vip(message):
         if result:
             send_msg_updt(user_id, "User was removed from VIP list")
         else:
-            send_msg_updt(user_id, "User cannot be removed from VIP list")
+            send_msg_updt(user_id, "❗️ User cannot be removed from VIP list")
 
     elif check_rights(user_id) == 1:
         send_msg_updt_with_menu(user_id, "You have no rights for it", reply_markup=markup)
@@ -170,7 +170,7 @@ def block_user(message):
         if result == 0:
             send_msg_updt(user_id, "User blocked successfully")
         else:
-            send_msg_updt(user_id, "User cannot be blocked")
+            send_msg_updt(user_id, "❗️ User cannot be blocked")
 
     elif check_rights(user_id) == 1:
         send_msg_updt_with_menu(user_id, "You have no rights for it", reply_markup=markup)
@@ -200,7 +200,7 @@ def anathem_user(message):
         if result == 0:
             send_msg_updt(user_id, "User anathemed successfully")
         else:
-            send_msg_updt(user_id, "User cannot be anathemed")
+            send_msg_updt(user_id, "❗️ User cannot be anathemed")
 
     elif check_rights(user_id) == 1:
         send_msg_updt_with_menu(user_id, "You have no rights for it", reply_markup=markup)
@@ -217,7 +217,7 @@ def mercy_user(message):
         if result == 0:
             send_msg_updt(user_id, "User unblocked successfully")
         else:
-            send_msg_updt(user_id, "User cannot be unblocked")
+            send_msg_updt(user_id, "❗️ User cannot be unblocked")
 
     elif check_rights(user_id) == 1:
         send_msg_updt_with_menu(user_id, "You have no rights for it", reply_markup=markup)
@@ -276,7 +276,7 @@ def my_status(message):
                 tmp = module_wireguard.get_config(name)
                 send_file_updt_with_menu(user_id, tmp)
         except:
-            send_msg_updt_with_menu_and_markdown(user_id, "You sent no user tg")
+            send_msg_updt_with_menu_and_markdown(user_id, "❗️ You sent no user tg")
     else:
         send_msg_updt(user_id, "Fuck off man, I have a job to do")
 
@@ -296,7 +296,7 @@ def broadcast(message):
             try:
                 send_msg_updt_with_menu(user_id, broadcast_message)
             except:
-                print("Message to " + user_id + " wasn't delivered.")
+                print("❗️ Message to " + user_id + " wasn't delivered.")
 
     elif check_rights(user_id) == 1:
         send_msg_updt_with_menu(user_id, "You have no rights for it", reply_markup=markup)
@@ -318,7 +318,7 @@ def new_message(message):
         try:
             send_msg_updt_with_menu(user_id, new_message)
         except:
-            print("Message to " + user_id + " wasn't delivered.")
+            print("❗️ Message to " + user_id + " wasn't delivered.")
 
     elif check_rights(user_id) == 1:
         send_msg_updt_with_menu(user_id, "You have no rights for it", reply_markup=markup)
@@ -335,7 +335,7 @@ def easy_add(message):
         if result == 0:
             send_msg_updt(user_id, "User added successfully")
         else:
-            send_msg_updt(user_id, "User cannot be added")
+            send_msg_updt(user_id, "❗️ User cannot be added")
 
     elif check_rights(user_id) == 1:
         send_msg_updt_with_menu(user_id, "You have no rights for it", reply_markup=markup)
@@ -353,7 +353,7 @@ def remove_user(message):
         if result == 0:
             send_msg_updt(user_id, "User removed successfully")
         else:
-            send_msg_updt(user_id, "User cannot be removed")
+            send_msg_updt(user_id, "❗️ User cannot be removed")
 
     elif check_rights(user_id) == 1:
         send_msg_updt_with_menu(user_id, "You have no rights for it", reply_markup=markup)
@@ -433,9 +433,9 @@ def unblock_me(message):
     if  (check_rights(user_id) == 1) or (check_rights(user_id) == 0):
         result = module_unblock_user.by_tg(user_id)
         if result == 0:
-            send_msg_updt_with_menu(user_id, "User unblocked successfully", reply_markup=markup)
+            send_msg_updt_with_menu(user_id, "🕊 User unblocked successfully", reply_markup=markup)
         else:
-            send_msg_updt_with_menu(user_id, "User cannot be unblocked", reply_markup=markup)
+            send_msg_updt_with_menu(user_id, "❗️ User cannot be unblocked", reply_markup=markup)
 
 #Answer for unknown command
 @bot.message_handler(content_types=['text'])
@@ -471,16 +471,25 @@ def check_users_time():
     timerTillMessage = 0
     while True:
         module_control_time.check_time()
-        module_control_disturbers.control()
         tgs = module_control_disturbers.get_edgers()
-        #print(tgs)
         if tgs != 1:
             for user_id in tgs:
                 try:
                     if not module_vip.check_vip_status(user_id[0]):
-                        send_msg_updt(user_id[0], "Your connection will be blocked in 10 minutes. You're walking on the really thin ice, man.\n")
+                        send_msg_updt(user_id[0], "❗️ Your connection will be blocked in 10 minutes.\n")
                 except:
                     print("User with tg: "+user_id[0]+"; still didn't send to bot any messages")
+        tgs = module_control_disturbers.get_ready_to_be_blocked()
+        if tgs != 1:
+            for user_id in tgs:
+                try:
+                    if not module_vip.check_vip_status(user_id[0]):
+                        send_msg_updt(user_id[0], "🔐 All your peers was just blocked.\n")
+                except:
+                    print("User with tg: "+user_id[0]+"; still didn't send to bot any messages")
+        imported_time.sleep(1)
+        module_control_disturbers.control()
+        #print(tgs)
         imported_time.sleep(600)
         #One more try to prevent bot from falling
         timerTillMessage = timerTillMessage + 10
@@ -550,18 +559,18 @@ def update_firewall_rules():
     if module_anathem_user.anathem_if_was_blocked() == 0:
         send_msg_updt_with_menu(master_code, "Anathem list was updated successfully", reply_markup=markup)
     else:
-        send_msg_updt_with_menu(master_code, "Error with updating anathem list", reply_markup=markup)
+        send_msg_updt_with_menu(master_code, "❗️ Error with updating anathem list", reply_markup=markup)
     if module_block_user.block_if_was_blocked() == 0:
         send_msg_updt_with_menu(master_code, "Block list was updated successfully", reply_markup=markup)
     else:
-        send_msg_updt_with_menu(master_code, "Error with updating block list", reply_markup=markup)
+        send_msg_updt_with_menu(master_code, "❗️ Error with updating block list", reply_markup=markup)
 
     #Check if COUNT chain exists in iptables
     tmp = subprocess.getoutput(["iptables -L COUNT"])
     if "chain `COUNT' in table `filter' is incompatible" not in tmp:
         send_msg_updt_with_menu(master_code, "Chain COUNT is exist", reply_markup=markup)
     else:
-        send_msg_updt_with_menu(master_code, "Chain does not exist, creating...", reply_markup=markup)
+        send_msg_updt_with_menu(master_code, "❗️ Chain does not exist, creating...", reply_markup=markup)
         #Create custom chain
         tmp = subprocess.getoutput(["iptables -N COUNT"])
         #Add jump from FORWARD chain to COUNT table

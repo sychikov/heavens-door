@@ -1,2 +1,2 @@
-HoursLimit = 12
+HoursLimit = 10
 MinutesBeforeAlert = 10
