@@ -132,7 +132,7 @@ def add_vip(message):
 
         result = module_vip.add_to_vip(mess[1])
         if result:
-            send_msg_updt(user_id, "User granted with divine blessing successfully")
+            send_msg_updt(user_id, "👑User granted with divine blessing successfully")
         else:
             send_msg_updt(user_id, "❗️ User cannot be granted with divine blessing")
 
@@ -150,7 +150,7 @@ def delete_from_vip(message):
 
         result = module_vip.delete_from_vip(mess[1])
         if result:
-            send_msg_updt(user_id, "User was removed from VIP list")
+            send_msg_updt(user_id, "☠️ User was removed from VIP list")
         else:
             send_msg_updt(user_id, "❗️ User cannot be removed from VIP list")
 
@@ -168,7 +168,7 @@ def block_user(message):
 
         result = module_block_user.by_tg(mess[1])
         if result == 0:
-            send_msg_updt(user_id, "User blocked successfully")
+            send_msg_updt(user_id, "🔐 User blocked successfully")
         else:
             send_msg_updt(user_id, "❗️ User cannot be blocked")
 
@@ -198,7 +198,7 @@ def anathem_user(message):
 
         result = module_anathem_user.by_tg(mess[1])
         if result == 0:
-            send_msg_updt(user_id, "User anathemed successfully")
+            send_msg_updt(user_id, "☠️ User anathemed successfully")
         else:
             send_msg_updt(user_id, "❗️ User cannot be anathemed")
 
@@ -215,7 +215,7 @@ def mercy_user(message):
         mess = message.text.split(" ")
         result = module_mercy_user.by_tg(mess[1])
         if result == 0:
-            send_msg_updt(user_id, "User unblocked successfully")
+            send_msg_updt(user_id, "🕊 User unblocked successfully")
         else:
             send_msg_updt(user_id, "❗️ User cannot be unblocked")
 
@@ -333,7 +333,7 @@ def easy_add(message):
         mess = message.text.split(" ")
         result = module_add_user.easy_add(mess[1])
         if result == 0:
-            send_msg_updt(user_id, "User added successfully")
+            send_msg_updt(user_id, "🧍🏻‍♂ User added successfully")
         else:
             send_msg_updt(user_id, "❗️ User cannot be added")
 
@@ -351,7 +351,7 @@ def remove_user(message):
 
         result = module_remove_user.remove(mess[1])
         if result == 0:
-            send_msg_updt(user_id, "User removed successfully")
+            send_msg_updt(user_id, "☠️ User removed successfully")
         else:
             send_msg_updt(user_id, "❗️ User cannot be removed")
 
@@ -459,7 +459,7 @@ def easy_add(message):
         if result == 0:
             send_msg_updt(user_id, "User added successfully")
         else:
-            send_msg_updt(user_id, "User cannot be added")
+            send_msg_updt(user_id, "❗️ User cannot be added")
 
     elif check_rights(user_id) == 1:
         send_msg_updt_with_menu(user_id, "You have no rights for it", reply_markup=markup)
