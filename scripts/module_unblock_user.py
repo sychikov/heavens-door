@@ -22,11 +22,13 @@ def get_ip(tg):
         except:
                 sys.exit()
 
-#Use ip for block user by ip
+#Use ip for block user by ip and set time to zero
 def unblock_user(list_ip):
         try:
                 for ip in list_ip:
                         subprocess.check_output("iptables -D FORWARD -s " + ip + " -j REJECT", shell=True)
+                        result = module_database.change("update time set minutes = 0 where ip=\""+ip+"\"")
+                        result = module_database.change("update time set hours = 0 where ip=\""+ip+"\"")
         except:
                 sys.exit()
 
