@@ -2,6 +2,7 @@
 from scripts import module_database
 from scripts import statuses
 from scripts import module_wireguard
+import subprocess
 user = [""]*4
 
 #Input should look like: "/add_user name:ip:tg:config_name"
@@ -58,9 +59,8 @@ def easy_add(new_user):
                 result = module_database.change("insert into users values (" + str(number) + ", \"" + name + "\", \"" + ip_address + "\", " + str(statuses.FlagNotBlocked) +",\"" + tg_num + "\")")
                 result = module_database.change("insert into time values (" + str(number) + ", \"" + ip_address + "\", 0, 0)")
                 result = module_database.change("insert into configs values (\"" + ip_address + "\", \"" + config_name + "\")")
-                tmp = subprocess.getoutput(["iptables -A COUNT -s " + ip_address + "-j RETURN"])
+                #tmp = subprocess.getoutput(["iptables -A COUNT -s " + ip_address + "-j RETURN"])
                 return 0
         except:
                 return 1
-
 

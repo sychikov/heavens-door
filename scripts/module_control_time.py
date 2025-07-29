@@ -32,8 +32,9 @@ def set_zero_time(ip):
 #Add 10 monutes to active user
 def add_time(ip):
         time = module_database.get("select minutes from time where ip=\""+ip+"\"")
-
+        #print(ip + " ip")
         #time = int(time[:-1])
+        #print(time + " time")
         time = int(''.join(time.split("\n")))
         if (time+10) >= 60:
                 result = module_database.change("update time set minutes = " + str(time+10-60) + " where ip=\""+ip+"\"")
@@ -58,5 +59,6 @@ def check_time():
                         print(ip + " inactive")
 
         for ip in ips:
-                add_time(str(ip))
+                if ip != '':
+                        add_time(str(ip))
         #time.sleep(600)

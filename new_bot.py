@@ -567,7 +567,7 @@ def update_firewall_rules():
 
     #Check if COUNT chain exists in iptables
     tmp = subprocess.getoutput(["iptables -L COUNT"])
-    if "chain `COUNT' in table `filter' is incompatible" not in tmp:
+    if "10.28.98" in tmp:
         send_msg_updt_with_menu(master_code, "Chain COUNT is exist", reply_markup=markup)
     else:
         send_msg_updt_with_menu(master_code, "❗️ Chain does not exist, creating...", reply_markup=markup)
@@ -578,9 +578,11 @@ def update_firewall_rules():
         ips = module_database.get("select ip from users")
         ips = ''.join(ips).split("\n")
         ips = [tmp.split(" ")[0] for tmp in ips]
+        print(ips)
         for ip in ips:
             #Add every peer with rule to just return
-            tmp = subprocess.getoutput(["iptables -A COUNT -s " + ip + "-j RETURN"])
+            tmp = subprocess.getoutput(["iptables -A COUNT -s " + ip + " -j RETURN"])
+            #print("iptables -A COUNT -s " + ip + "-j RETURN")
         tmp = subprocess.getoutput(["iptables -Z COUNT"])
         send_msg_updt_with_menu(master_code, "Chain COUNT was successfully created", reply_markup=markup)
 
